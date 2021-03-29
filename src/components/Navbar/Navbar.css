@@ -1,0 +1,30 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top:0;
+    background-color: #2563EB;
+    width: 100vw;
+    padding: 1rem 2rem;
+    height:4rem;
+    overflow-y:hidden;
+    z-index: 5;
+}
+
+.nav>h1 {
+    padding-left: 2rem;
+}
+.nav--menu>ul {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+}
+.nav--menu {
+    display: flex;
+    margin-right: 2rem;
+}
+
+.nav--menu ul li {
+    padding: 0 1rem;
+}
