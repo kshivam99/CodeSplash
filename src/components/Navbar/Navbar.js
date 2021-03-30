@@ -12,14 +12,14 @@ function Navbar() {
   return (
     <div className="nav">
       <Link className="link" to="/">
-        <h2>CodeSplash</h2>
+        <h2 onClick={handleMenuIconClick}>CodeSplash</h2>
       </Link>
       <ul className={!showDropDownNav ? "menu" : "menu active"}>
         <Link className="link" to="/">
-          <li>Home</li>
+          <li onClick={handleMenuIconClick}>Home</li>
         </Link>
         <Link className="link" to="/playlist">
-          <li>My Playlist</li>
+          <li onClick={handleMenuIconClick}>My Playlist</li>
         </Link>
         <li>
           <button>Dark</button>

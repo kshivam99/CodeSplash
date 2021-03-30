@@ -33,7 +33,7 @@ function Playlist() {
   function addPlaylist(e) {
     if (e.key === "Enter") {
       setPlaylist((prev) =>
-        prev.concat({ id: uuid(), type: pname, videos: [] })
+        prev.concat({ id: uuid(), name:pname, type: pname, videos: [] })
       );
       setPname("");
     }
@@ -55,6 +55,9 @@ function Playlist() {
       <div className="playlists">
         {playlist.map(item=>
             <PlaylistCard item={item} />)}
+        {!playlist.length?<h1 style={{
+          color:"#2563EB"
+        }}>Add playlist to view here</h1>:null}
       </div>
     </div>
   );

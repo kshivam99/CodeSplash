@@ -71,9 +71,8 @@
 }
 
 @media screen and (max-width: 760px) {
-    .nav{
+    .nav {
         position: static;
-        margin-bottom:0;
     }
 
     .nav .menu {
