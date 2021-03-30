@@ -3,14 +3,17 @@
   display: flex;
   width: 100%;
   height: 100vh;
+  align-items: flex-start;
+  overflow-y: hidden;
 }
 
 .sidelist {
-  height: calc(100vh-4rem);
+  height: 90vh;
   width: 40%;
   display: flex;
   flex-direction: column;
   overflow: auto;
+  transition: all 0.6s ease;
 }
 
 .sidelist--header {
@@ -19,6 +22,14 @@
   min-height: 4rem;
   display: flex;
   justify-content: space-between;
+}
+
+.sidelist--header h1 {
+  text-transform: uppercase;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
 }
 
 .stacklist--container {
@@ -32,49 +43,81 @@
 }
 
 .stacklist {
-    width: 80%;
+  width: 80%;
 }
+
 .videoPlayer {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
 
 .sidebar--icon {
-    cursor: pointer;
-    margin: 0 1rem;
+  display: none;
 }
 
 .sidelist--show {
-    display: none;
+  display: none;
 }
 
-@media screen and (max-width: 700px) {
+.sidelist--close {
+  display: none;
+}
 
-    .sidebar--icon{
-        display: block;
-        margin: 0 1rem;
-    }
-    .sidelist{
-        position: absolute;
-        background-color: #fff;
-        height: 90vh;
-        top:4rem;
-        left:-100%;
-        overflow:auto;
-        transition: all 0.6s ease;
+.addToPlaylist {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 1rem;
+  position: absolute;
+  top:25%;
+  width: 10rem;
+  height: 10rem;
+  background-color: #fff;
+  right:50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
 
-    }
-    .sidelist--show{
-        position: absolute;
-        background-color: #fff;
-        height: 90vh;
-        top:4rem;
-        left:0;
-        overflow:auto;
-        transition: all 0.6s ease;
+.addToPlaylist input {
+  border: none;
+  outline: none;
+}
 
+@media screen and (max-width: 760px) {
+  .sidelist--close{
+    display: block;
+  }
 
-    }
+  .sidebar--icon {
+      display: block;
+      cursor: pointer;
+      margin: 0 1rem;
+      position: absolute;
+      top:4rem;
+  }
+  .sidelist {
+    position: absolute;
+    background-color: #fff;
+    height: 90vh;
+    top: 4rem;
+    transform: translateX(-100%);
+    overflow: auto;
+    transition: all 0.6s ease;
+    z-index: 5;
+  }
+  .sidelist--show {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #fff;
+    height: 90vh;
+    top: 4rem;
+    transform: translateX(0);
+    overflow: auto;
+    transition: all 0.6s ease;
+    z-index: 5;
+  }
 }
