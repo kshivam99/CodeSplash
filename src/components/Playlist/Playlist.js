@@ -18,7 +18,7 @@ function PlaylistCard({item}) {
         <div className="playlist--card">
             <AiTwotoneDelete onClick={handleDelete}/>
                  {item.type}
-            <Link to={`/:${item.type}/:1/playlist`}>
+            <Link to={`/:${item.type.toLowerCase()}/:1/playlist`}>
             {item.videos.length?<button>View Playlist</button>:null}
             </Link>
             <h4>{item.videos.length} Videos</h4>

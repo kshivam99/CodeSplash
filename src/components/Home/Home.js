@@ -19,10 +19,10 @@ function Home() {
 
   function getFilteredData(library, type) {
     const res = (id ? playlist : library).filter((curr) => {
-      if (curr.type === JSON.parse(type)) {
+      if (curr.type.toLowerCase() === JSON.parse(type)) {
         name = curr.name;
       }
-      return curr.type === JSON.parse(type);
+      return curr.type.toLowerCase() === JSON.parse(type);
     })[0].videos;
     return res;
   }
