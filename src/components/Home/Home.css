@@ -2,9 +2,7 @@
   margin-top: 4rem;
   display: flex;
   width: 100%;
-  height: 100vh;
   align-items: flex-start;
-  overflow-y: hidden;
 }
 
 .sidelist {
@@ -46,12 +44,29 @@
   width: 80%;
 }
 
-.videoPlayer {
+.videoPlayer--body {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  height: 100%;
+  overflow-y: auto;
+}
+
+.videoPlayer {
+  width: 80%;
+  height:30rem;
+  margin: 1rem 0rem;
+  overflow-y: hidden;
+}
+
+.videoPlayer--notes{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: 2rem 0;
 }
 
 .sidebar--icon {

@@ -4,12 +4,11 @@
     box-sizing: border-box;
     user-select: none;
     overflow-x: hidden;
-
+    scroll-behavior: smooth;
 }
 
 .App {
   text-align: center;
-  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

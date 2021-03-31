@@ -33,7 +33,7 @@ function Playlist() {
   function addPlaylist(e) {
     if (e.key === "Enter") {
       setPlaylist((prev) =>
-        prev.concat({ id: uuid(), name:pname, type: pname, videos: [] })
+        prev.concat({ id: uuid(), name:pname, type: pname, videos: [], notes:[] })
       );
       setPname("");
     }

@@ -21,9 +21,6 @@ function Navbar() {
         <Link className="link" to="/playlist">
           <li onClick={handleMenuIconClick}>My Playlist</li>
         </Link>
-        <li>
-          <button>Dark</button>
-        </li>
       </ul>
       <div className="menu-icon" onClick={handleMenuIconClick}>
         {!showDropDownNav ? <FaBars /> : <FaTimes />}

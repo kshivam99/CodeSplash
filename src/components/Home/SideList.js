@@ -31,7 +31,13 @@ function StackList({ vid, setCurrVideo, setShowList }) {
   function addPlaylist(e) {
     if (e.key === "Enter") {
       setPlaylist((prev) =>
-        prev.concat({ id: uuid(), name:pname, type: pname, videos: [] })
+        prev.concat({
+          id: uuid(),
+          name: pname,
+          type: pname,
+          videos: [],
+          notes: [],
+        })
       );
       setPname("");
     }
@@ -42,7 +48,7 @@ function StackList({ vid, setCurrVideo, setShowList }) {
       <div
         className="stacklist"
         onClick={() => {
-          setCurrVideo(vid.video);
+          setCurrVideo(vid);
         }}
       >
         <h1>{vid.heading}</h1>
@@ -58,7 +64,7 @@ function StackList({ vid, setCurrVideo, setShowList }) {
       >
         <AiFillCloseCircle
           onClick={() => setShowPlaylistMenu((prev) => !prev)}
-          style={{ marginLeft: "auto", marginBottom:"2rem" }}
+          style={{ marginLeft: "auto", marginBottom: "2rem" }}
           size={24}
         />
         <input
@@ -88,7 +94,7 @@ function StackList({ vid, setCurrVideo, setShowList }) {
 
 function SideList({ name, videos, showList, setShowList, setCurrVideo }) {
   useEffect(() => {
-    setCurrVideo(videos[0].video);
+    setCurrVideo(videos[0]);
   }, []);
 
   return (

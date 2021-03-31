@@ -4,16 +4,16 @@ import Imgg from "./image.svg";
 import { Link } from "react-router-dom";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { useLibrary } from "../../contexts/libraryContext";
-import { data } from "../../data/videoLibrary";
 
 function Main() {
-  const { setLibrary } = useLibrary();
+  const { library, setLibrary } = useLibrary();
   const [showDropDown, setShowDropDown] = useState(false);
 
   useEffect(() => {
-    setLibrary(data);
-  });
+    localStorage.setItem("library", JSON.stringify(library))
+  }, [library])
 
+  console.log(library);
   return (
     <div className="main--body">
       <div className="main--nav">
@@ -26,8 +26,8 @@ function Main() {
             <Link className="link" to="/:foundation/Home">
               <p>Foundation</p>
             </Link>
-            <Link className="link" to={"/:es6/Home"}>
-              <p>ES6</p>
+            <Link className="link" to={"/:js/Home"}>
+              <p>JavaScript</p>
             </Link>
             <Link className="link" to={"/:react/Home"}>
               <p>React</p>
@@ -46,7 +46,6 @@ function Main() {
             </Link>
           </div>
         </div>
-        <input />
       </div>
       <div className="header--image">
         <img src={Imgg} alt="" />
