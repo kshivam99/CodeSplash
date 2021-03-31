@@ -12,7 +12,7 @@ function Navbar() {
   return (
     <div className="nav">
       <Link className="link" to="/">
-        <h2 onClick={handleMenuIconClick}>CodeSplash</h2>
+        <h2 onClick={()=>setShowDropDownNav(false)}>CodeSplash</h2>
       </Link>
       <ul className={!showDropDownNav ? "menu" : "menu active"}>
         <Link className="link" to="/">
