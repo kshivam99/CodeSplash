@@ -3,36 +3,41 @@ import uuid from "react-uuid";
 export const data = [
     {
       id:uuid(),
-      name:"Learn HTML, CSS by creating own portfolio",
+      author:"Tanay Pratap",
+      profile:"Microsoft",
+      image:"https://pbs.twimg.com/profile_images/1238749114348662784/p9hc5fuP_400x400.jpg",
+      desc:"In this series, we will create a profile/portfolio website for you,every web developer needs one! By learning how to create your profile you will get accustomed to HTML, CSS. The last part of this mini-series will also covering hosting the website and getting a URL out of it.",
+      duration:"47 Mins",
+      name:"Foundation",
       type:"foundation",
       videos: [
         {
           id:uuid(),
-          video:"https://www.youtube.com/embed/E8cl_8ktp9M",
+          video:"https://youtube.com/embed/E8cl_8ktp9M",
           heading: "HTML",
           notes:[]
         },
         {
           id:uuid(),
-          video:"https://www.youtube.com/embed/3n1VkrzhxUE",
+          video:"https://youtube.com/embed/3n1VkrzhxUE",
           heading: "CSS",
           notes:[]
         },
         {
           id:uuid(),
-          video:"https://www.youtube.com/embed/UpEupeE7vUE",
+          video:"https://youtube.com/embed/UpEupeE7vUE",
           heading:"Hosting",
           notes:[]
         },
         {
           id:uuid(),
-          video:"https://www.youtube.com/embed/Nyj1nzXLFjM",
+          video:"https://youtube.com/embed/Nyj1nzXLFjM",
           heading: "Git and Github",
           notes:[]
         },
         {
           id:uuid(),
-          video:"https://www.youtube.com/embed/oUO3-XQAEsY",
+          video:"https://youtube.com/embed/oUO3-XQAEsY",
           heading: "Continuos Delivery",
           notes:[]
         }
@@ -40,6 +45,11 @@ export const data = [
     },
     {
       id:uuid(),
+      author:"Akshay Saini",
+      profile:"Uber",
+      image:"https://yt3.ggpht.com/ytc/AAUvwnin7zykyU20uPntBE42IfNsj9SAL7tKeE7eiNuUYA=s900-c-k-c0x00ffffff-no-rj",
+      desc:"Namaste JavaScript is a pure in-depth JavaScript Course released for Free on Youtube. It will cover the core concepts of JavaScript in detail and everything about how JS works behind the scenes inside the JavaScript engine.",
+      duration:"6 hours 22 minutes 43 seconds",
       name:"JavaScript",
       type:"js",
       videos: [

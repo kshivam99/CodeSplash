@@ -1,104 +1,191 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { usePlaylist } from "../../contexts/playlistContext";
 import { useLibrary } from "../../contexts/libraryContext";
 import uuid from "react-uuid";
+import ReactPlayer from "react-player";
+import { AiFillDelete, AiFillFileAdd } from "react-icons/ai";
+import { useWatchHistory } from "../../contexts/watchHistoryContext";
 
 function VideoPlay({ currVideo, id, type }) {
   const { library, setLibrary } = useLibrary();
   const { playlist, setPlaylist } = usePlaylist();
-  const [time, setTime] = useState("");
+  const { watchHistory, setWatchHistory } = useWatchHistory();
   const [note, setNote] = useState("");
-
-  useEffect(() => {
-    localStorage.setItem("library", JSON.stringify(library));
-  }, [library]);
+  const ref = useRef();
 
   function handleSubmit(e) {
-    if (e.key === "Enter") {
-      id?setPlaylist((prev) =>
-      prev.map((curr) =>
-        curr.type === type
-          ? {
-              ...curr,
-              videos: curr.videos.map((vid) =>
-                vid.id === currVideo.id
-                  ? {
-                      ...vid,
-                      notes: [
-                        ...vid.notes,
-                        { id: uuid(), time: time, note: note },
-                      ],
-                    }
-                  : vid
-              ),
-            }
-          : curr
-      )):
-      setLibrary((prev) =>
-        prev.map((curr) =>
-          curr.type === type
-            ? {
-                ...curr,
-                videos: curr.videos.map((vid) =>
-                  vid.id === currVideo.id
-                    ? {
-                        ...vid,
-                        notes: [
-                          ...vid.notes,
-                          { id: uuid(), time: time, note: note },
-                        ],
-                      }
-                    : vid
-                ),
-              }
-            : curr
-        )
-      );
-      setTime("");
+    if ((e.key === "Enter" || e.type === "click") && note) {
+      id
+        ? setPlaylist((prev) =>
+            prev.map((curr) =>
+              curr.type === type
+                ? {
+                    ...curr,
+                    videos: curr.videos.map((vid) =>
+                      vid.id === currVideo.id
+                        ? {
+                            ...vid,
+                            notes: [
+                              ...vid.notes,
+                              {
+                                id: uuid(),
+                                timeStamp: ref.current.getCurrentTime(),
+                                note: note,
+                                date: Date(),
+                              },
+                            ],
+                          }
+                        : vid
+                    ),
+                  }
+                : curr
+            )
+          )
+        : setLibrary((prev) =>
+            prev.map((curr) =>
+              curr.type === type
+                ? {
+                    ...curr,
+                    videos: curr.videos.map((vid) =>
+                      vid.id === currVideo.id
+                        ? {
+                            ...vid,
+                            notes: [
+                              ...vid.notes,
+                              {
+                                id: uuid(),
+                                timeStamp: ref.current.getCurrentTime(),
+                                note: note,
+                                date: Date(),
+                              },
+                            ],
+                          }
+                        : vid
+                    ),
+                  }
+                : curr
+            )
+          );
       setNote("");
     }
   }
 
-  console.log(library);
+  function seekTo(time) {
+    ref.current.seekTo(time);
+  }
+
+  function handleNoteDelete(noteId) {
+    id
+      ? setPlaylist((prev) =>
+          prev.map((curr) =>
+            curr.type === type
+              ? {
+                  ...curr,
+                  videos: curr.videos.map((vid) =>
+                    vid.id === currVideo.id
+                      ? {
+                          ...vid,
+                          notes: vid.notes.filter((note) => note.id !== noteId),
+                        }
+                      : vid
+                  ),
+                }
+              : curr
+          )
+        )
+      : setLibrary((prev) =>
+          prev.map((curr) =>
+            curr.type === type
+              ? {
+                  ...curr,
+                  videos: curr.videos.map((vid) =>
+                    vid.id === currVideo.id
+                      ? {
+                          ...vid,
+                          notes: vid.notes.filter((note) => note.id !== noteId),
+                        }
+                      : vid
+                  ),
+                }
+              : curr
+          )
+        );
+  }
+
+  function getTime(time) {
+    let hour, min, sec;
+    time = parseInt(time);
+    hour = time / 3600;
+    time = time % 3600;
+    min = time / 60;
+    time = time % 60;
+    sec = time;
+    return `${parseInt(hour)}:${parseInt(min)}:${parseInt(sec)}`;
+  }
+
+  function handleHistory() {
+    setWatchHistory((prev) => prev.concat(currVideo));
+  }
+
+  function check() {
+    console.log("check")
+  }
+
   return (
     <div className="videoPlayer--body">
       <div className="videoPlayer">
-        <iframe
-          style={{ borderRadius: "2rem"}}
+        <ReactPlayer
+          ref={ref}
+          controls="true"
           width="100%"
-          height="100%"
-          src={currVideo.video}
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen="true"
+          height="80%"
+          className="iframe"
+          url={currVideo.video}
+          playing="true"
+          light=""
+          onStart={handleHistory}
         />
       </div>
-      <h1>Add Notes Below</h1>
 
       <div className="videoPlayer--notes">
-        <input
-          value={time}
-          placeholder="add time"
-          onChange={(e) => setTime(e.target.value)}
-        />
-        <input
-          value={note}
-          placeholder="add notes"
-          onChange={(e) => setNote(e.target.value)}
-          onKeyDown={handleSubmit}
-        />
-
+        <div className="notes--header">
+          <h1>Notes</h1>
+        </div>
         <div className="notes-list">
-          {(id?playlist:library).map((curr) =>
+          {(id ? playlist : library).map((curr) =>
             curr.type === type
               ? curr.videos.map((vid) =>
                   vid.id === currVideo.id
-                    ? vid.notes.map((item) => <h1>{item.note}</h1>)
+                    ? vid.notes.map((item) => (
+                        <div className="note">
+                          <div className="note--detail">
+                            <p className="note--info">{item.note}</p>
+                            <p className="note--date">{item.date.slice(0, 25)}</p>
+                          </div>
+                          <div className="note--util">
+                            <h1 onClick={() => seekTo(item.timeStamp)}>
+                              {getTime(item.timeStamp)}
+                            </h1>
+                            <AiFillDelete
+                              onClick={() => handleNoteDelete(item.id)}
+                            />
+                          </div>
+                        </div>
+                      ))
                     : null
                 )
               : null
           )}
+        </div>
+        <div className="notes--input">
+          <input
+            maxLength="65"
+            value={note}
+            placeholder="add notes"
+            onChange={(e) => setNote(e.target.value)}
+            onKeyDown={handleSubmit}
+          />
+          <AiFillFileAdd size={24} onClick={handleSubmit} />
         </div>
       </div>
     </div>

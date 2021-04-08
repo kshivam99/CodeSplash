@@ -3,15 +3,7 @@
   display: flex;
   width: 100%;
   align-items: flex-start;
-}
-
-.sidelist {
-  height: 90vh;
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  transition: all 0.6s ease;
+  height: auto;
 }
 
 .sidelist--header {
@@ -20,6 +12,7 @@
   min-height: 4rem;
   display: flex;
   justify-content: space-between;
+  background-color: #333333;
 }
 
 .sidelist--header h1 {
@@ -47,53 +40,136 @@
 .videoPlayer--body {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  overflow-y: auto;
+  justify-content: space-between;
+  align-items: flex-start;
+  overflow-y: hidden;
+  height: 100vh;
+  background-color: #000000;
 }
 
 .videoPlayer {
-  width: 80%;
-  height:30rem;
-  margin: 1rem 0rem;
+  margin-top: 2rem;
+  margin-left: 6rem;
+  width: 60%;
+  height: 100%;
+  overflow-y: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+}
+
+.videoPlayer div {
   overflow-y: hidden;
 }
 
 .videoPlayer--notes{
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 80vh;
+  width: 25%;
+  background-color: #222222;
+}
+
+.videoPlayer--notes .notes--input{
+  margin-bottom: 1rem;
+  height: 20%;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1rem;
+}
+.videoPlayer--notes .notes--input input{
+  height: 80%;
+  width: 80%;
+  padding: 1rem;
+  border:none;
+  outline: none;
+}
+
+.notes-list{
+  padding: 2rem 0;
+  height: 60vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.notes--header {
+  width: 100%;
+  height:3rem;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  color:#fff;
+  background-color: #151515;
+}
+
+.note {
+  width: 100%;
+  min-height:6rem;
+  margin:1rem 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color:#fff;
+  overflow: auto;
+  border-left: 0.2rem solid #e66225;
+}
+
+.note--detail{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.note--util {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 80%;
-  margin: 2rem 0;
+  height: 80%;
+  justify-content: space-between;
 }
 
-.sidebar--icon {
-  display: none;
+.note--info {
+  margin: 0 auto;
+  max-width: 30ch;
+  font-size: 1rem;
+  text-align: left;
+  width:100%;
+  word-wrap: break-word;
+  margin-bottom: 0.5rem;
 }
 
-.sidelist--show {
-  display: none;
+.note--date {
+  font-size: 0.7rem;
 }
 
-.sidelist--close {
-  display: none;
-}
 
 .addToPlaylist {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 1rem;
   position: absolute;
-  top:25%;
-  width: 10rem;
-  height: 10rem;
+  top:20vh;
+  width: 20vw;
+  height: 15vw;
   background-color: #fff;
-  right:50%;
+  right:0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem; 
 }
 
 .addToPlaylist input {
@@ -101,42 +177,57 @@
   outline: none;
 }
 
+.input--flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  margin-bottom: auto;
+}
+
+.sidebar--icon {
+  display: block;
+  cursor: pointer;
+  margin: 2rem 1rem;
+  position: fixed;
+  top:4rem;
+}
+.sidelist {
+position: absolute;
+display: flex;
+flex-direction: column;
+background-color: #222222;
+color:#fff;
+height: 85vh;
+min-width: 20rem;
+top: 4rem;
+transform: translateX(-100%);
+overflow: auto;
+transition: all 0.6s ease;
+z-index: 5;
+}
+.sidelist--show {
+display: flex;
+flex-direction: column;
+position: absolute;
+background-color: #222222;
+color: #fff;
+height: 89vh;
+min-width: 20rem;
+top: 4rem;
+transform: translateX(0);
+overflow: auto;
+transition: all 0.6s ease;
+z-index: 5;
+}
+
 @media screen and (max-width: 760px) {
 
   .home--body {
     margin-top:0;
   }
-  .sidelist--close{
-    display: block;
-  }
-
-  .sidebar--icon {
-      display: block;
-      cursor: pointer;
-      margin: 0 1rem;
-      position: absolute;
-      top:4rem;
-  }
-  .sidelist {
-    position: absolute;
-    background-color: #fff;
-    height: 90vh;
-    top: 4rem;
-    transform: translateX(-100%);
-    overflow: auto;
-    transition: all 0.6s ease;
-    z-index: 5;
-  }
-  .sidelist--show {
+  .videoPlayer--body {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    background-color: #fff;
-    height: 90vh;
-    top: 4rem;
-    transform: translateX(0);
-    overflow: auto;
-    transition: all 0.6s ease;
-    z-index: 5;
   }
 }

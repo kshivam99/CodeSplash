@@ -10,8 +10,7 @@ import { useParams } from "react-router-dom";
 
 function Home() {
   let { type, id } = useParams();
-  let name;
-  type = JSON.stringify(type.slice(1)).toLowerCase();
+  type = type.toLowerCase();
   const { library, setLibrary } = useLibrary();
   const { playlist, setPlaylist } = usePlaylist();
   const [showList, setShowList] = useState(false);
@@ -19,10 +18,7 @@ function Home() {
 
   function getFilteredData(library, type) {
     const res = (id ? playlist : library).filter((curr) => {
-      if (curr.type.toLowerCase() === JSON.parse(type)) {
-        name = curr.name;
-      }
-      return curr.type.toLowerCase() === JSON.parse(type);
+      return curr.type.toLowerCase() === type;
     })[0].videos;
     return res;
   }
@@ -32,7 +28,7 @@ function Home() {
   return (
     <div className="home--body">
       <SideList
-        name={name}
+        name={type}
         videos={filteredData}
         showList={showList}
         setShowList={setShowList}
@@ -43,7 +39,7 @@ function Home() {
         size={32}
         onClick={() => setShowList((prev) => !prev)}
       />
-      <VideoPlay currVideo={currVideo} id={id} type={JSON.parse(type)} />
+      <VideoPlay currVideo={currVideo} id={id} type={type} />
     </div>
   );
 }
