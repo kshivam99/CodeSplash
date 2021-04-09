@@ -1,6 +1,6 @@
 
 .courses--main {
-    height:100vh;
+    height:100%;
     width:100%;
     margin-top: 6rem;
 }
@@ -21,7 +21,7 @@
 }
 
 .courses--header input {
-    margin-right: 8rem;
+    margin-right: 11rem;
     width: 30%;
     height:2rem;
     padding-left:2rem;
@@ -40,8 +40,7 @@
 
 .course--img{
     width: 20%;
-    background-image: url("https://miro.medium.com/max/720/1*LjR0UrFB2a__5h1DWqzstA.png");
-    background-position: left;
+    overflow: hidden;
 }
 .course--details {
     width:80%;
@@ -63,6 +62,11 @@
 
 .course--title {
     color: #8D3E3C;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.course--title h1{
     font-size: 2rem;
 }
 
@@ -111,7 +115,7 @@
     justify-items: center;
     align-content: center;
     row-gap:2rem;
-    column-gap: 12rem;
+    column-gap: 8rem;
     margin-left: 5rem;
     margin-right: 8rem;
 }

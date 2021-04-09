@@ -45,7 +45,6 @@ function Navbar() {
           <Link className="link" to="/courses">
              <li onClick={handleMenuIconClick}>Courses</li>
            </Link>
-            <li>Learn</li>
             <Link className="link" to="/playlist">
              <li onClick={handleMenuIconClick}>My Playlist</li>
            </Link>

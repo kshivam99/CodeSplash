@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import uuid from "react-uuid";
 import "./Playlist.css";
 import { usePlaylist } from "../../contexts/playlistContext";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import PlayIcon from "../../assests/play-icon.png";
-import { HiOutlineViewGridAdd } from "react-icons/hi";
 
 function Alert({ view, setView, handleDelete, name, length }) {
   return (
@@ -22,7 +19,8 @@ function Alert({ view, setView, handleDelete, name, length }) {
           <div class="modal-card-body">
             <p class="modal-description">
               Are you sure you want to discard <strong>{name}</strong> playlist?{" "}
-              {length<2?`${length} video`:`${length} videos`} will be deleted.
+              {length < 2 ? `${length} video` : `${length} videos`} will be
+              deleted.
             </p>
           </div>
           <div class="modal-footer">
@@ -57,14 +55,32 @@ function PlaylistCard({ item }) {
 
   return (
     <div className="playlist--card">
-      <img src={PlayIcon} alt="" />
-      <h3>{item.name}</h3>
-      <h4>{item.videos.length<2?`${item.videos.length} video`:`${item.videos.length} videos`}</h4>
-      <div className="playlist--btn">
+      <div className="course--img"></div>
+      <div className="course--details">
+        <div className="course--title">
+          <h1>{item.name}</h1>
+          <AiTwotoneDelete
+            size={24}
+            style={{ marginLeft: "auto" }}
+            onClick={() => setViewDeleteModal(true)}
+          />
+        </div>
+        <div className="course--author">
+          <div className="author--details">
+            <h1>{item.author}</h1>
+            <h2>{item.profile}</h2>
+          </div>
+        </div>
+        <p>{item.desc}</p>
+        <h1 className="course--duration">
+          {" "}
+          {item.videos.length < 2
+            ? `${item.videos.length} video`
+            : `${item.videos.length} videos`}
+        </h1>
         <Link to={`/${item.type.toLowerCase()}/:1`}>
           {item.videos.length ? <button>View Playlist</button> : null}
         </Link>
-        <AiTwotoneDelete onClick={() => setViewDeleteModal(true)} />
       </div>
       <Alert
         view={viewDeleteModal}
@@ -77,46 +93,8 @@ function PlaylistCard({ item }) {
   );
 }
 
-function CreateNewPlaylist({ setPlaylist }) {
-  const [pname, setPname] = useState();
-
-  function addPlaylist(e) {
-    if (
-      (e.key === "Enter" || e.type === "click") &&
-      pname &&
-      pname.trim() !== ""
-    ) {
-      setPlaylist((prev) =>
-        prev.concat({
-          id: uuid(),
-          type: pname.trim(),
-          videos: []
-        })
-      );
-      setPname("");
-    }
-  }
-
-  return (
-    <div className="createplaylist--container">
-      <input
-        value={pname}
-        maxLength="15"
-        onChange={(e) => setPname(e.target.value)}
-        onKeyDown={addPlaylist}
-        placeholder="create custom playlist"
-        style={{
-          backgroundColor: "#fff",
-          marginRight: "1rem",
-        }}
-      />
-      <HiOutlineViewGridAdd size={24} onClick={addPlaylist} />
-    </div>
-  );
-}
-
 function Playlist() {
-  const { playlist, setPlaylist } = usePlaylist();
+  const { playlist } = usePlaylist();
 
   return (
     <div className="playlist--body">

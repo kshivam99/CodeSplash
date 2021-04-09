@@ -33,6 +33,7 @@ function AddToPlaylist({ showPlaylistMenu, setShowPlaylistMenu, vid }) {
       setPlaylist((prev) =>
         prev.concat({
           id: uuid(),
+          name: pname.trim(),
           type: pname.trim(),
           videos: []
         })

@@ -15,7 +15,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route exact path="/">
-          {/* <Main /> */}
+          <Main />
         </Route>
         <Route path="/courses">
           <Courses />

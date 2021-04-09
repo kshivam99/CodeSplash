@@ -10,6 +10,7 @@ export const data = [
       duration:"47 Mins",
       name:"Foundation",
       type:"foundation",
+      back:"https://static.frontendmasters.com/assets/courses/2021-03-23-web-perf/thumb.jpg",
       videos: [
         {
           id:uuid(),
@@ -52,6 +53,7 @@ export const data = [
       duration:"6 hours 22 minutes 43 seconds",
       name:"JavaScript",
       type:"js",
+      back:"https://static.frontendmasters.com/assets/courses/2019-06-20-getting-started-javascript-v2/thumb.jpg",
       videos: [
         {
           id:uuid(),
