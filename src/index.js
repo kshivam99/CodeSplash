@@ -4,18 +4,18 @@ import "./index.css";
 import App from "./App";
 import { PlaylistProvider } from "./contexts/playlistContext";
 import { LibraryProvider } from "./contexts/libraryContext";
-import { WatchHistoryProvider } from "./contexts/watchHistoryContext";
+import { BookmarkProvider } from "./contexts/bookmarkContext";
 import { IconContext } from "react-icons";
 
 ReactDOM.render(
   <React.StrictMode>
     <LibraryProvider>
       <PlaylistProvider>
-        <WatchHistoryProvider>
+        <BookmarkProvider>
           <IconContext.Provider value={{ color: "#fff" }}>
             <App />
           </IconContext.Provider>
-        </WatchHistoryProvider>
+        </BookmarkProvider>
       </PlaylistProvider>
     </LibraryProvider>
   </React.StrictMode>,

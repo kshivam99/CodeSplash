@@ -46,15 +46,27 @@
   margin:0 0.5rem
 }
 
+.list--details{
+  display: flex;
+  flex-direction: column;
+}
 .list--title {
+  font-size: 1.5rem;
   color:#DD625E;
   margin-left: 2rem;
+  cursor:pointer; 
 }
 .list--author{
+  font-size: 0.7rem;
   color:#9E9E9E;
 }
 
-
+.link:focus,
+.link:visited,
+.link:link,
+.link:active {
+  text-decoration: none;
+}
 
 @media screen and (max-width: 760px) {
   .main--body {

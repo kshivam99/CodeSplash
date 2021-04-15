@@ -1,48 +1,57 @@
 import React, { useState } from "react";
 import "./Main.css";
 import { Link } from "react-router-dom";
+import { useBookmark, useLibrary } from "../../contexts/bookmarkContext";
 
 function MainHeader() {
-  return(
+  return (
     <div className="main--header">
       <h1>Welcome Back, Shivam</h1>
     </div>
-  )
+  );
 }
 
-function MainTile() {
-  return(
+function BookMark() {
+  const { bookmark } = useBookmark();
+  return (
     <div className="tile--body">
       <div className="tile--header">
         <h1>Your Bookmarks</h1>
       </div>
       <div className="tile--content">
-        <div className="content--list">
-          <div className="list--image">
-            <img src="https://static.frontendmasters.com/assets/courses/2021-02-09-functional-first-steps/thumb.jpg" alt=""/>
+        {bookmark.map((item) => (
+          <div className="content--list">
+            <div className="list--image">
+              <img src={item.back} alt="" />
+            </div>
+            <div className="list--details">
+              <Link className="link" to={`/${item.type}/Home`}>
+                <h1 className="list--title">{item.name}</h1>
+              </Link>
+              <h1 className="list--author">{item.author}</h1>
+            </div>
           </div>
-          <div className="list--details">
-            <h1 className="list--title">
-                Functional programming
-            </h1>
-            <h1 className="list--author">
-                Anjana Vakil
-            </h1>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
-  )
+  );
+}
+
+function Notes() {
+    return(
+      <div className="div">
+        
+      </div>
+    )
 }
 
 function Main() {
-
   return (
     <div className="main--body">
       <MainHeader />
       <div className="main--content">
-          <MainTile />
-          <MainTile />
+        <BookMark />
+        <Notes />
       </div>
     </div>
   );

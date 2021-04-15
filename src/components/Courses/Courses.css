@@ -64,6 +64,7 @@
     color: #8D3E3C;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
 .course--title h1{

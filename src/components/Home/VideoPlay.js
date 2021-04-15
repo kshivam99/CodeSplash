@@ -4,12 +4,10 @@ import { useLibrary } from "../../contexts/libraryContext";
 import uuid from "react-uuid";
 import ReactPlayer from "react-player";
 import { AiFillDelete, AiFillFileAdd } from "react-icons/ai";
-import { useWatchHistory } from "../../contexts/watchHistoryContext";
 
 function VideoPlay({ currVideo, id, type }) {
   const { library, setLibrary } = useLibrary();
   const { playlist, setPlaylist } = usePlaylist();
-  const { watchHistory, setWatchHistory } = useWatchHistory();
   const [note, setNote] = useState("");
   const ref = useRef();
 
@@ -123,9 +121,6 @@ function VideoPlay({ currVideo, id, type }) {
     return `${parseInt(hour)}:${parseInt(min)}:${parseInt(sec)}`;
   }
 
-  function handleHistory() {
-    setWatchHistory((prev) => prev.concat(currVideo));
-  }
 
   function check() {
     console.log("check")
@@ -143,7 +138,6 @@ function VideoPlay({ currVideo, id, type }) {
           url={currVideo.video}
           playing="true"
           light=""
-          onStart={handleHistory}
         />
       </div>
 
