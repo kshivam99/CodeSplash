@@ -11,13 +11,11 @@ export const data = [
       name:"Foundation",
       type:"foundation",
       back:"https://static.frontendmasters.com/assets/courses/2021-03-23-web-perf/thumb.jpg",
-      isSaved:false,
       videos: [
         {
           id:uuid(),
           video:"https://youtube.com/embed/E8cl_8ktp9M",
-          heading: "HTML",
-          notes:[]
+          heading: "HTML"
         },
         {
           id:uuid(),
@@ -55,7 +53,6 @@ export const data = [
       name:"JavaScript",
       type:"js",
       back:"https://static.frontendmasters.com/assets/courses/2019-06-20-getting-started-javascript-v2/thumb.jpg",
-      isSaved:false,
       videos: [
         {
           id:uuid(),

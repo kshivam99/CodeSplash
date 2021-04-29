@@ -6,36 +6,28 @@ import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { useBookmark } from "../../contexts/bookmarkContext";
 
 function Course({
-  item: {
-    id,
-    author,
-    profile,
-    image,
-    desc,
-    duration,
-    name,
-    type,
-    back,
-    isSaved,
-  },
+  item: { id, author, profile, image, desc, duration, name, type, back },
 }) {
-  const { setBookmark } = useBookmark();
-  const { setLibrary } = useLibrary();
+  const { bookmark, setBookmark } = useBookmark();
+  console.log(bookmark);
+
+  function isSaved() {
+    let avail = false;
+    bookmark.map((item) => {
+      if (item.id === id) {
+        avail = true;
+      }
+      return item;
+    });
+    return avail;
+  }
 
   function handleBookmark() {
-    if (isSaved) {
+    if (isSaved()) {
       setBookmark((prev) => prev.filter((item) => item.id !== id));
-      setLibrary((prev) =>
-        prev.map((curr) =>
-          curr.id === id ? { ...curr, isSaved: false } : curr
-        )
-      );
     } else {
       setBookmark((prev) =>
         prev.concat({ id, author, profile, name, back, type })
-      );
-      setLibrary((prev) =>
-        prev.map((curr) => (curr.id === id ? { ...curr, isSaved: true } : curr))
       );
     }
   }
@@ -47,7 +39,7 @@ function Course({
       <div className="course--details">
         <div className="course--title">
           <h1>{name}</h1>
-          {!isSaved ? (
+          {!isSaved() ? (
             <BsBookmark
               onClick={handleBookmark}
               size={24}
@@ -79,10 +71,17 @@ function Course({
   );
 }
 
-function Courses() {
+function Courses({ setShowNavBottom }) {
   const { library } = useLibrary();
   const [inputText, setInputText] = useState("");
   const [output, setOutput] = useState([]);
+
+  useEffect(() => {
+    setShowNavBottom(true);
+    return () => {
+      setShowNavBottom(false);
+    };
+  }, []);
 
   function checkAvailable(db, item) {
     let pat = item.trim();

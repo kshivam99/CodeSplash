@@ -3,7 +3,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({showNavBottom}) {
   const [showDropDownNav, setShowDropDownNav] = useState(false);
 
   function handleMenuIconClick() {
@@ -35,7 +35,7 @@ function Navbar() {
           {!showDropDownNav ? <FaBars /> : <FaTimes />}
         </div>
       </div>
-      <div className="bottom--bar"></div>
+      <div style={{display:showNavBottom?"":"none"}} className="bottom--bar"></div>
     </>
   );
 }

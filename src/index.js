@@ -7,6 +7,7 @@ import { LibraryProvider } from "./contexts/libraryContext";
 import { BookmarkProvider } from "./contexts/bookmarkContext";
 import { AuthProvider } from "./contexts/authContext";
 import { ToastProvider } from "./contexts/toastContext";
+import { NoteProvider } from "./contexts/notesContext";
 import { IconContext } from "react-icons";
 
 ReactDOM.render(
@@ -16,9 +17,11 @@ ReactDOM.render(
         <LibraryProvider>
           <PlaylistProvider>
             <BookmarkProvider>
+              <NoteProvider>
               <IconContext.Provider value={{ color: "#fff" }}>
                 <App />
               </IconContext.Provider>
+              </NoteProvider>
             </BookmarkProvider>
           </PlaylistProvider>
         </LibraryProvider>

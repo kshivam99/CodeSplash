@@ -4,7 +4,9 @@
   align-items: flex-start;
   height: 89vh;
   overflow-y: hidden;
+  margin-top: 4rem;
 }
+
 
 .sidelist--header {
   font-size: 0.5rem;

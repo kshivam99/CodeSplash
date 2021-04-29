@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./Main.css";
 import { Link } from "react-router-dom";
 import { useBookmark, useLibrary } from "../../contexts/bookmarkContext";
@@ -38,14 +38,16 @@ function BookMark() {
 }
 
 function Notes() {
-    return(
-      <div className="div">
-        
-      </div>
-    )
+  return <div className="div"></div>;
 }
 
-function Main() {
+function Main({ setShowNavBottom }) {
+  useEffect(() => {
+    setShowNavBottom(true);
+    return ()=>{
+      setShowNavBottom(false);
+    }
+  }, []);
   return (
     <div className="main--body">
       <MainHeader />
