@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Courses.css";
-import uuid from "react-uuid";
 import { Link } from "react-router-dom";
 import { useLibrary } from "../../contexts/libraryContext";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
@@ -26,10 +25,18 @@ function Course({
   function handleBookmark() {
     if (isSaved) {
       setBookmark((prev) => prev.filter((item) => item.id !== id));
-      setLibrary(prev=>prev.map(curr=>curr.id===id?{...curr, isSaved:false}:curr))
+      setLibrary((prev) =>
+        prev.map((curr) =>
+          curr.id === id ? { ...curr, isSaved: false } : curr
+        )
+      );
     } else {
-      setBookmark((prev) => prev.concat({ id, author, profile, name, back, type }));
-      setLibrary(prev=>prev.map(curr=>curr.id===id?{...curr, isSaved:true}:curr))
+      setBookmark((prev) =>
+        prev.concat({ id, author, profile, name, back, type })
+      );
+      setLibrary((prev) =>
+        prev.map((curr) => (curr.id === id ? { ...curr, isSaved: true } : curr))
+      );
     }
   }
   return (
@@ -71,18 +78,35 @@ function Course({
     </div>
   );
 }
+
 function Courses() {
   const { library } = useLibrary();
+  const [inputText, setInputText] = useState("");
+  const [output, setOutput] = useState([]);
+
+  function checkAvailable(db, item) {
+    let pat = item.trim();
+    return db.toUpperCase().includes(pat.toUpperCase());
+  }
+
+  useEffect(() => {
+    setOutput(library.filter((curr) => checkAvailable(curr.name, inputText)));
+  }, [inputText]);
+
   return (
     <div className="courses--main">
       <div className="courses--header">
         <h1>Full Stack Development Courses</h1>
-        <input type="text" placeholder="Type to Search" />
+        <input
+          type="text"
+          placeholder="Type to Search"
+          onChange={(e) => setInputText(e.target.value)}
+        />
       </div>
       <div className="courses--list">
-        {library.map((item) => (
-          <Course item={item} />
-        ))}
+        {inputText.length
+          ? output.map((item) => <Course item={item} />)
+          : library.map((item) => <Course item={item} />)}
       </div>
     </div>
   );

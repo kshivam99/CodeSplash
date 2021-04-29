@@ -51,6 +51,7 @@ function Main() {
       <MainHeader />
       <div className="main--content">
         <BookMark />
+        <BookMark />
         <Notes />
       </div>
     </div>

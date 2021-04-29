@@ -1,5 +1,4 @@
 .home--body {
-  margin-top: 4rem;
   display: flex;
   width: 100%;
   align-items: flex-start;
@@ -200,7 +199,8 @@ flex-direction: column;
 background-color: #222222;
 color:#fff;
 height: 85vh;
-min-width: 25rem;
+min-width: 20rem;
+max-width: 100%;
 top: 4rem;
 transform: translateX(-100%);
 overflow: auto;
@@ -215,7 +215,7 @@ position: absolute;
 background-color: #222222;
 color: #fff;
 height: 89vh;
-min-width: 25rem;
+min-width: 20rem;
 top: 4rem;
 transform: translateX(0);
 overflow: auto;
