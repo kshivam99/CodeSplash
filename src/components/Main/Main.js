@@ -25,7 +25,7 @@ function BookMark() {
               <img src={item.back} alt="" />
             </div>
             <div className="list--details">
-              <Link className="link" to={`/${item.type}/Home`}>
+              <Link className="link" to={`/course/${item._id}`}>
                 <h1 className="list--title">{item.name}</h1>
               </Link>
               <h1 className="list--author">{item.author}</h1>

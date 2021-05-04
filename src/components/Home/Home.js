@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useEffect } from "react";
 import "./Home.css";
 import { useLibrary } from "../../contexts/libraryContext";
 import { usePlaylist } from "../../contexts/playlistContext";
@@ -6,35 +6,34 @@ import { useState } from "react";
 import SideList from "./SideList";
 import VideoPlay from "./VideoPlay";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { useAuth } from "../../contexts/authContext";
+import axios from "axios";
 
 function Home() {
-  let { type, id } = useParams();
-  let name;
-  type = type.toLowerCase();
+  let { id } = useParams();
+  const path = useLocation().pathname;
+  const { auth } = useAuth();
   const { library } = useLibrary();
   const { playlist } = usePlaylist();
   const [showList, setShowList] = useState(false);
   const [currVideo, setCurrVideo] = useState("");
 
-  function getFilteredData(library, type) {
-    const res = (id ? playlist : library).filter((curr) => {
-      if (curr.type.toLowerCase() === type)
-      {
-        name=curr.name;
-      }
-      return curr.type.toLowerCase() === type;
-    })[0].videos;
-    return res;
+  function getFilteredData(library) {
+    if(path.includes("playlist"))
+    {
+      return playlist.find(item=>item._id===id);
+    }
+    return library.find(item=>item._id===id);
   }
 
-  const filteredData = getFilteredData(library, type);
-
+  const filteredData = getFilteredData(library, id);
+  
   return (
     <div className="home--body">
       <SideList
-        name={name}
-        videos={filteredData}
+        name={filteredData && filteredData.name}
+        videos={filteredData && filteredData.videos}
         showList={showList}
         setShowList={setShowList}
         setCurrVideo={setCurrVideo}
@@ -44,7 +43,7 @@ function Home() {
         size={32}
         onClick={() => setShowList((prev) => !prev)}
       />
-      <VideoPlay currVideo={currVideo} id={id} type={type} />
+      <VideoPlay currVideo={currVideo} />
     </div>
   );
 }

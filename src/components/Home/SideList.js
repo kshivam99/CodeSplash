@@ -3,11 +3,16 @@ import { usePlaylist } from "../../contexts/playlistContext";
 import { RiPlayListAddLine } from "react-icons/ri";
 import { AiFillCloseCircle } from "react-icons/ai";
 import uuid from "react-uuid";
-import { HiOutlineViewGridAdd } from "react-icons/hi"
+import { HiOutlineViewGridAdd } from "react-icons/hi";
+import { useToast } from "../../contexts/toastContext";
+import { useAuth } from "../../contexts/authContext";
+
 
 function AddToPlaylist({ showPlaylistMenu, setShowPlaylistMenu, vid }) {
   const { playlist, setPlaylist } = usePlaylist();
   const [pname, setPname] = useState();
+  const { toast } = useToast();
+
 
   function checkAlreadyPresent(videos, vid) {
     return !videos.filter((item) => item === vid).length > 0;
@@ -16,7 +21,7 @@ function AddToPlaylist({ showPlaylistMenu, setShowPlaylistMenu, vid }) {
   function addToPlaylist(e, vid) {
     setPlaylist((prev) =>
       prev.map((curr) =>
-        curr.id === e.target.value
+        curr._id === e.target.value
           ? {
               ...curr,
               videos: checkAlreadyPresent(curr.videos, vid)
@@ -28,17 +33,25 @@ function AddToPlaylist({ showPlaylistMenu, setShowPlaylistMenu, vid }) {
     );
   }
 
+  function checkAlreadyPresentPlaylist(pname){
+    return !playlist.filter((item) => item.name === pname).length > 0;
+  }
+
   function addPlaylist(e) {
-    if ((e.key === "Enter" || e.type==='click') && pname && pname.trim()!=="") {
+    if ((e.key === "Enter" || e.type==='click') && pname && pname.trim()!=="" && checkAlreadyPresentPlaylist(pname)) {
       setPlaylist((prev) =>
         prev.concat({
-          id: uuid(),
+          _id: uuid(),
           name: pname.trim(),
-          type: pname.trim(),
           videos: []
         })
       );
       setPname("");
+    }
+    else if(e.key === "Enter"){
+      toast("Playlist already exist",{
+        type:"warning"
+      })
     }
   }
 
@@ -73,7 +86,7 @@ function AddToPlaylist({ showPlaylistMenu, setShowPlaylistMenu, vid }) {
         >
           <option>Add to playlist</option>
           {playlist.map((item) => (
-            <option value={item.id}>{item.type}</option>
+            <option value={item._id}>{item.name}</option>
           ))}
         </select>
       </div>
@@ -82,6 +95,7 @@ function AddToPlaylist({ showPlaylistMenu, setShowPlaylistMenu, vid }) {
 }
 function StackList({ vid, setCurrVideo, setShowList }) {
   const [showPlaylistMenu, setShowPlaylistMenu] = useState(false);
+  const { auth } = useAuth();
 
   return (
     <div className="stacklist--container">
@@ -93,18 +107,19 @@ function StackList({ vid, setCurrVideo, setShowList }) {
       >
         <h1>{vid.heading}</h1>
       </div>
-      <RiPlayListAddLine
+      { auth && <RiPlayListAddLine
         onClick={() => setShowPlaylistMenu((prev) => !prev)}
         size={32}
-      />
+      />}
       <AddToPlaylist showPlaylistMenu={showPlaylistMenu} setShowPlaylistMenu={setShowPlaylistMenu} vid={vid}/>
     </div>
   );
 }
 
 function SideList({ name, videos, showList, setShowList, setCurrVideo }) {
+
   useEffect(() => {
-    setCurrVideo(videos[0]);
+    setCurrVideo( videos && videos[0]);
   }, []);
 
   return (
@@ -117,7 +132,7 @@ function SideList({ name, videos, showList, setShowList, setCurrVideo }) {
           size={24}
         />
       </div>
-      {videos.map((vid) => (
+      {videos && videos.map((vid) => (
         <StackList
           vid={vid}
           setCurrVideo={setCurrVideo}

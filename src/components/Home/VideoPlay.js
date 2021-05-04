@@ -6,9 +6,7 @@ import ReactPlayer from "react-player";
 import { AiFillDelete, AiFillFileAdd } from "react-icons/ai";
 import { useNote } from "../../contexts/notesContext";
 
-function VideoPlay({ currVideo, id, type }) {
-  const { library, setLibrary } = useLibrary();
-  const { playlist, setPlaylist } = usePlaylist();
+function VideoPlay({ currVideo }) {
   const { notes, setNotes } = useNote();
   const [note, setNote] = useState("");
   const ref = useRef();
@@ -27,59 +25,7 @@ function VideoPlay({ currVideo, id, type }) {
           date: Date(),
         })
       );
-
-      // id
-      //   ? setPlaylist((prev) =>
-      //       prev.map((curr) =>
-      //         curr.type === type
-      //           ? {
-      //               ...curr,
-      //               videos: curr.videos.map((vid) =>
-      //                 vid.id === currVideo.id
-      //                   ? {
-      //                       ...vid,
-      //                       notes: [
-      //                         ...vid.notes,
-      //                         {
-      //                           id: uuid(),
-      //                           timeStamp: ref.current.getCurrentTime(),
-      //                           note: note,
-      //                           date: Date(),
-      //                         },
-      //                       ],
-      //                     }
-      //                   : vid
-      //               ),
-      //             }
-      //           : curr
-      //       )
-      //     )
-      //   : setLibrary((prev) =>
-      //       prev.map((curr) =>
-      //         curr.type === type
-      //           ? {
-      //               ...curr,
-      //               videos: curr.videos.map((vid) =>
-      //                 vid.id === currVideo.id
-      //                   ? {
-      //                       ...vid,
-      //                       notes: [
-      //                         ...vid.notes,
-      //                         {
-      //                           id: uuid(),
-      //                           timeStamp: ref.current.getCurrentTime(),
-      //                           note: note,
-      //                           date: Date(),
-      //                         },
-      //                       ],
-      //                     }
-      //                   : vid
-      //               ),
-      //             }
-      //           : curr
-      //       )
-      //     );
-      // setNote("");
+      setNote("");
     }
   }
 
@@ -89,41 +35,6 @@ function VideoPlay({ currVideo, id, type }) {
 
   function handleNoteDelete(noteId) {
     setNotes(prev=>prev.filter(note=>note.id!==noteId));
-    // id
-    //   ? setPlaylist((prev) =>
-    //       prev.map((curr) =>
-    //         curr.type === type
-    //           ? {
-    //               ...curr,
-    //               videos: curr.videos.map((vid) =>
-    //                 vid.id === currVideo.id
-    //                   ? {
-    //                       ...vid,
-    //                       notes: vid.notes.filter((note) => note.id !== noteId),
-    //                     }
-    //                   : vid
-    //               ),
-    //             }
-    //           : curr
-    //       )
-    //     )
-    //   : setLibrary((prev) =>
-    //       prev.map((curr) =>
-    //         curr.type === type
-    //           ? {
-    //               ...curr,
-    //               videos: curr.videos.map((vid) =>
-    //                 vid.id === currVideo.id
-    //                   ? {
-    //                       ...vid,
-    //                       notes: vid.notes.filter((note) => note.id !== noteId),
-    //                     }
-    //                   : vid
-    //               ),
-    //             }
-    //           : curr
-    //       )
-    //     );
   }
 
   function getTime(time) {
@@ -137,10 +48,6 @@ function VideoPlay({ currVideo, id, type }) {
     return `${parseInt(hour)}:${parseInt(min)}:${parseInt(sec)}`;
   }
 
-  function check() {
-    console.log("check");
-  }
-
   return (
     <div className="videoPlayer--body">
       <div className="videoPlayer">
@@ -150,7 +57,7 @@ function VideoPlay({ currVideo, id, type }) {
           width="100%"
           height="80%"
           className="iframe"
-          url={currVideo.video}
+          url={currVideo && currVideo.video}
           playing="true"
           light=""
         />

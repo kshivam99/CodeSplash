@@ -4,17 +4,18 @@ import { Link } from "react-router-dom";
 import { useLibrary } from "../../contexts/libraryContext";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { useBookmark } from "../../contexts/bookmarkContext";
+import { useAuth } from "../../contexts/authContext";
+import axios from "axios";
 
 function Course({
-  item: { id, author, profile, image, desc, duration, name, type, back },
+  item: { _id, author, profile, image, desc, duration, name, type, back },
 }) {
   const { bookmark, setBookmark } = useBookmark();
-  console.log(bookmark);
 
   function isSaved() {
     let avail = false;
     bookmark.map((item) => {
-      if (item.id === id) {
+      if (item._id === _id) {
         avail = true;
       }
       return item;
@@ -24,13 +25,14 @@ function Course({
 
   function handleBookmark() {
     if (isSaved()) {
-      setBookmark((prev) => prev.filter((item) => item.id !== id));
+      setBookmark((prev) => prev.filter((item) => item._id !== _id));
     } else {
       setBookmark((prev) =>
-        prev.concat({ id, author, profile, name, back, type })
+        prev.concat({ _id, author, profile, name, back, type })
       );
     }
   }
+  
   return (
     <div className="course--div">
       <div className="course--img">
@@ -63,7 +65,7 @@ function Course({
         </div>
         <p>{desc}</p>
         <h1 className="course--duration">{duration}</h1>
-        <Link className="link" to={`/${type}/Home`}>
+        <Link className="link" to={`/course/${_id}`}>
           <button>View Playlist</button>
         </Link>
       </div>
@@ -75,6 +77,8 @@ function Courses({ setShowNavBottom }) {
   const { library } = useLibrary();
   const [inputText, setInputText] = useState("");
   const [output, setOutput] = useState([]);
+  const { auth } = useAuth();
+  const { bookmark } = useBookmark();
 
   useEffect(() => {
     setShowNavBottom(true);
@@ -82,6 +86,31 @@ function Courses({ setShowNavBottom }) {
       setShowNavBottom(false);
     };
   }, []);
+
+  useEffect(() => {
+    if (auth) {
+      try {
+        (async function postPlaylist() {
+          const response = await axios.post(
+            "http://localhost:3000/bookmark",
+            {
+              bookmark: bookmark,
+            },
+            {
+              headers: {
+                "auth-token": auth.token,
+              },
+            }
+          );
+          console.log("bookmark", response.data.bookmark);
+          response.data.bookmark &&
+            localStorage.setItem("bookmark", JSON.stringify(response.data.bookmark));
+        })();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [bookmark]);
 
   function checkAvailable(db, item) {
     let pat = item.trim();

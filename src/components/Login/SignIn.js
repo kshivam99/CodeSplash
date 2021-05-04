@@ -18,37 +18,35 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const history = useHistory();
 
-  // async function handleSignIn() {
-  //   try {
-  //       setIsLoading(true);
-  //     const res = await axios.post(
-  //       "https://protected-bastion-58177.herokuapp.com/auth/login",
-  //       {
-  //         email: email,
-  //         password: password,
-  //       }
-  //     );
-  //     console.log(res);
-  //     setIsLoading(false);
-  //     if (!res.data.token) {
-  //       setError(res.data);
-  //     } else {
-  //         toast("Logged in Successfully",{
-  //           type:"success"
-  //         });
-  //       setAuth(res.data);
-  //       setAuth((prev) => {
-  //         localStorage.setItem("auth", JSON.stringify(prev));
-  //         return prev;
-  //       });
-  //     }
-  //   } catch (err) {
-  //       setIsLoading(false);
-  //     console.log(err);
-  //   }
-  // }
-
-
+  async function handleSignIn() {
+    try {
+        setIsLoading(true);
+      const res = await axios.post(
+        "http://localhost:3000/auth/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
+      console.log(res);
+      setIsLoading(false);
+      if (!res.data.token) {
+        setError(res.data);
+      } else {
+          toast("Logged in Successfully",{
+            type:"success"
+          });
+        setAuth(res.data);
+        setAuth((prev) => {
+          localStorage.setItem("auth", JSON.stringify(prev));
+          return prev;
+        });
+      }
+    } catch (err) {
+        setIsLoading(false);
+      console.log(err);
+    }
+  }
 
   return (
     <div className="login--container">
@@ -74,7 +72,7 @@ function SignIn() {
           />
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <button className="login--btn">
+        <button onClick={handleSignIn} className="login--btn">
           {isLoading?<Loader type="TailSpin" color="#fff" height={20} width={20} />:"Sign In"}
         </button>
         

@@ -49,7 +49,7 @@ function PlaylistCard({ item }) {
   const [viewDeleteModal, setViewDeleteModal] = useState(false);
 
   function handleDelete() {
-    setPlaylist((prev) => prev.filter((curr) => curr.id !== item.id));
+    setPlaylist((prev) => prev.filter((curr) => curr._id !== item._id));
     setViewDeleteModal(false);
   }
 
@@ -65,12 +65,7 @@ function PlaylistCard({ item }) {
             onClick={() => setViewDeleteModal(true)}
           />
         </div>
-        <div className="course--author">
-          <div className="author--details">
-            <h1>{item.author}</h1>
-            <h2>{item.profile}</h2>
-          </div>
-        </div>
+        
         <p>{item.desc}</p>
         <h1 className="course--duration">
           {" "}
@@ -78,7 +73,7 @@ function PlaylistCard({ item }) {
             ? `${item.videos.length} video`
             : `${item.videos.length} videos`}
         </h1>
-        <Link to={`/${item.type.toLowerCase()}/:1`}>
+        <Link to={`/playlist/${item._id}`}>
           {item.videos.length ? <button>View Playlist</button> : null}
         </Link>
       </div>

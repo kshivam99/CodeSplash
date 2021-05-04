@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useToast } from "../../contexts/toastContext";
 import "./Login.css";
 import { Link } from "react-router-dom";
 
-function SignUp({ setIsRegistered }) {
+function SignUp() {
   const [error, setError] = useState("");
   const { toast } = useToast();
   const [name, setName] = useState("");
@@ -15,9 +15,10 @@ function SignUp({ setIsRegistered }) {
   const history = useHistory();
 
   async function handleSignUp() {
+    console.log("inside sign up")
     try {
       const res = await axios.post(
-        "https://protected-bastion-58177.herokuapp.com/auth/register",
+        "http://localhost:3000/auth/register",
         {
           name: name,
           email: email,
@@ -29,10 +30,10 @@ function SignUp({ setIsRegistered }) {
         setError(res.data);
       }
       else{
-        setIsRegistered(true);
         toast("Signed Up Successfully, Login to Continue",{
           type:"success"
         });
+        <Redirect to="/login" />
       }
     } catch (err) {
       console.log(err);
