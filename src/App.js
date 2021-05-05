@@ -8,6 +8,7 @@ import Playlist from "./components/Playlist/Playlist";
 import Login from "./components/Login/SignIn";
 import Join from "./components/Login/SignUp";
 import Logout from "./components/Login/Logout";
+import Footer from "./components/Footer/Footer";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "./contexts/authContext";
 import { useLibrary } from "./contexts/libraryContext";
@@ -230,6 +231,7 @@ function App() {
         </Route>
       </Switch>
       </Router>
+      <Footer />
       <ToastContainer
         style={{ position: "fixed", top: "80vh", right: "1rem" }}
       />

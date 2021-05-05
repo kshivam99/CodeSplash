@@ -64,7 +64,7 @@ function WatchHistory() {
               <Link className="link" to={`/course/${item.playlistId}`}>
                 <h1 className="list--title">{item.heading}</h1>
               </Link>
-              <h1 className="list--author">{item.playlistName}</h1>
+              <h1 style={{alignSelf:"flex-start"}} className="list--author">{item.playlistName}</h1>
             </div>
             <AiTwotoneDelete
               size={24}
