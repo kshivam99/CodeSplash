@@ -43,7 +43,7 @@ function Home() {
         size={32}
         onClick={() => setShowList((prev) => !prev)}
       />
-      <VideoPlay currVideo={currVideo} />
+      <VideoPlay currVideo={currVideo} playlistId={id} playlistName={filteredData && filteredData.name}/>
     </div>
   );
 }

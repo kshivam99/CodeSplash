@@ -3,6 +3,8 @@ import "./Main.css";
 import { Link } from "react-router-dom";
 import { useBookmark, useLibrary } from "../../contexts/bookmarkContext";
 import { useAuth } from "../../contexts/authContext";
+import { useHistory } from "../../contexts/historyContext";
+import { AiTwotoneDelete } from "react-icons/ai";
 
 function MainHeader() {
   const { auth } = useAuth();
@@ -44,6 +46,38 @@ function BookMark() {
   );
 }
 
+function WatchHistory() {
+  const { history, setHistory } = useHistory();
+
+  function deleteFromHistory(id) {
+    setHistory((prev) => prev.filter((item) => item.id !== id));
+  }
+  return (
+    <div className="tile--body">
+      <div className="tile--header">
+        <h1>Your Watch History</h1>
+      </div>
+      <div className="tile--content">
+        {history.map((item) => (
+          <div className="content--list">
+            <div className="list--details">
+              <Link className="link" to={`/course/${item.playlistId}`}>
+                <h1 className="list--title">{item.heading}</h1>
+              </Link>
+              <h1 className="list--author">{item.playlistName}</h1>
+            </div>
+            <AiTwotoneDelete
+              size={24}
+              style={{ marginLeft: "auto", marginRight: "2rem" }}
+              onClick={() => deleteFromHistory(item.id)}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Notes() {
   return <div className="div"></div>;
 }
@@ -61,11 +95,10 @@ function Main({ setShowNavBottom }) {
       <MainHeader />
       <div className="main--content">
         {auth && <BookMark />}
+        {auth && <WatchHistory />}
         <Notes />
       </div>
-      <div className="row">
-        
-      </div>
+      <div className="row"></div>
     </div>
   );
 }

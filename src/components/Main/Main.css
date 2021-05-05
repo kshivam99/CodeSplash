@@ -54,11 +54,11 @@
 .list--details {
   display: flex;
   flex-direction: column;
+  margin-left: 2rem;
 }
 .list--title {
   font-size: 1.5rem;
   color: #dd625e;
-  margin-left: 2rem;
   cursor: pointer;
 }
 .list--author {

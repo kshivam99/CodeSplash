@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import { useBookmark } from './contexts/bookmarkContext';
 import { usePlaylist } from './contexts/playlistContext';
 import { useNote } from './contexts/notesContext';
+import { useHistory } from './contexts/historyContext';
 
 
 function App() {
@@ -24,16 +25,18 @@ function App() {
   const { setLibrary } = useLibrary();
   const { setBookmark } = useBookmark();
   const { playlist, setPlaylist } = usePlaylist();
+  const { history, setHistory } = useHistory();
   const [ showNavBottom, setShowNavBottom ] = useState(false);
   const { ToastContainer } = useToast();
   const { notes, setNotes } = useNote();
+
+  console.log(history);
 
   useEffect(()=>{
     (async ()=>{
       try{
       const res = await axios.get("http://localhost:3000/courses");
       res.data && setLibrary(res.data);
-      console.log("library", res.data)
       }
       catch(err)
       {
@@ -54,8 +57,27 @@ function App() {
               },
             }
           );
-          console.log("bookmarks", res);
           res.data.bookmark && setBookmark(res.data.bookmark);
+        })();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    if (auth) {
+      try {
+        (async function getData() {
+          const res = await axios.get(
+            "http://localhost:3000/history",
+            {
+              headers: {
+                "auth-token": auth.token,
+              },
+            }
+          );
+          res.data.history && setHistory(res.data.history);
         })();
       } catch (err) {
         console.log(err);
@@ -75,7 +97,6 @@ function App() {
               },
             }
           );
-          console.log("notes", res);
           res.data && setNotes(res.data.notes);
         })();
       } catch (err) {
@@ -96,7 +117,6 @@ function App() {
               },
             }
           );
-          console.log(res);
           res.data && setPlaylist(res.data.playlist);
         })();
       } catch (err) {
@@ -121,7 +141,6 @@ function App() {
               },
             }
           );
-          console.log("playlist", response.data.playlist);
           response.data.playlist &&
             localStorage.setItem("playlist", JSON.stringify(response.data.playlist));
         })();
@@ -130,6 +149,30 @@ function App() {
       }
     }
   }, [playlist]);
+
+  useEffect(() => {
+    if (auth) {
+      try {
+        (async function postHistory() {
+          const response = await axios.post(
+            "http://localhost:3000/history",
+            {
+              history: history,
+            },
+            {
+              headers: {
+                "auth-token": auth.token,
+              },
+            }
+          );
+          response.data.history &&
+            localStorage.setItem("history", JSON.stringify(response.data.history));
+        })();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [history]);
 
   useEffect(() => {
     if (auth) {
@@ -146,7 +189,6 @@ function App() {
               },
             }
           );
-          console.log("notes", response.data.notes);
           response.data.notes &&
             localStorage.setItem("notes", JSON.stringify(response.data.notes));
         })();
@@ -156,8 +198,6 @@ function App() {
     }
   }, [notes]);
 
-
-  console.log(auth);
   
   return (
     <div className="App">

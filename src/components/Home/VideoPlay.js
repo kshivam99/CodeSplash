@@ -1,17 +1,19 @@
 import React, { useState, useRef } from "react";
-import { usePlaylist } from "../../contexts/playlistContext";
-import { useLibrary } from "../../contexts/libraryContext";
 import uuid from "react-uuid";
 import ReactPlayer from "react-player";
 import { AiFillDelete, AiFillFileAdd } from "react-icons/ai";
 import { useNote } from "../../contexts/notesContext";
+import { useHistory } from "../../contexts/historyContext";
+import { useAuth } from "../../contexts/authContext";
 
-function VideoPlay({ currVideo }) {
+function VideoPlay({ currVideo, playlistId, playlistName }) {
   const { notes, setNotes } = useNote();
   const [note, setNote] = useState("");
+  const { setHistory } = useHistory();
   const ref = useRef();
+  const {auth } = useAuth();
 
-  console.log("notes",notes);
+  console.log("notes", notes);
   console.log("curr video", currVideo);
 
   function handleSubmit(e) {
@@ -49,6 +51,12 @@ function VideoPlay({ currVideo }) {
     return `${parseInt(hour)}:${parseInt(min)}:${parseInt(sec)}`;
   }
 
+  function addToHistory(){
+    if(auth){
+      setHistory(prev=>prev.concat({...currVideo, playlistId, playlistName}));
+    }
+  }
+
   return (
     <div className="videoPlayer--body">
       <div className="videoPlayer">
@@ -59,8 +67,8 @@ function VideoPlay({ currVideo }) {
           height="80%"
           className="iframe"
           url={currVideo && currVideo.video}
-          playing="true"
           light=""
+          onStart={addToHistory}
         />
       </div>
 
