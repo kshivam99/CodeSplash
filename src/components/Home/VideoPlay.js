@@ -12,13 +12,13 @@ function VideoPlay({ currVideo }) {
   const ref = useRef();
 
   console.log("notes",notes);
-  console.log(currVideo);
+  console.log("curr video", currVideo);
 
   function handleSubmit(e) {
     if ((e.key === "Enter" || e.type === "click") && note) {
       setNotes((prev) =>
         prev.concat({
-          id: uuid(),
+          _id: uuid(),
           videoId: currVideo.id,
           timeStamp: ref.current.getCurrentTime(),
           note: note,
@@ -34,7 +34,8 @@ function VideoPlay({ currVideo }) {
   }
 
   function handleNoteDelete(noteId) {
-    setNotes(prev=>prev.filter(note=>note.id!==noteId));
+    console.log("inside delete")
+    setNotes(prev=>prev.filter(note=>note._id!==noteId));
   }
 
   function getTime(time) {
@@ -68,7 +69,7 @@ function VideoPlay({ currVideo }) {
           <h1>Notes</h1>
         </div>
         <div className="notes-list">
-          {notes
+          {notes && currVideo && notes
             .filter((item) => item.videoId === currVideo.id)
             .map((item) => (
               <div className="note">
@@ -80,7 +81,7 @@ function VideoPlay({ currVideo }) {
                   <h1 onClick={() => seekTo(item.timeStamp)}>
                     {getTime(item.timeStamp)}
                   </h1>
-                  <AiFillDelete onClick={() => handleNoteDelete(item.id)} />
+                  <AiFillDelete onClick={() => handleNoteDelete(item._id)} />
                 </div>
               </div>
             ))}

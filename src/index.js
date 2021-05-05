@@ -9,6 +9,7 @@ import { AuthProvider } from "./contexts/authContext";
 import { ToastProvider } from "./contexts/toastContext";
 import { NoteProvider } from "./contexts/notesContext";
 import { IconContext } from "react-icons";
+import { HistoryProvider } from "./contexts/historyContext";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,9 +19,11 @@ ReactDOM.render(
           <PlaylistProvider>
             <BookmarkProvider>
               <NoteProvider>
-              <IconContext.Provider value={{ color: "#fff" }}>
-                <App />
-              </IconContext.Provider>
+                <HistoryProvider>
+                  <IconContext.Provider value={{ color: "#fff" }}>
+                    <App />
+                  </IconContext.Provider>
+                </HistoryProvider>
               </NoteProvider>
             </BookmarkProvider>
           </PlaylistProvider>

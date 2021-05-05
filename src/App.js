@@ -16,6 +16,7 @@ import axios from "axios";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { useBookmark } from './contexts/bookmarkContext';
 import { usePlaylist } from './contexts/playlistContext';
+import { useNote } from './contexts/notesContext';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
   const { playlist, setPlaylist } = usePlaylist();
   const [ showNavBottom, setShowNavBottom ] = useState(false);
   const { ToastContainer } = useToast();
+  const { notes, setNotes } = useNote();
 
   useEffect(()=>{
     (async ()=>{
@@ -59,7 +61,49 @@ function App() {
         console.log(err);
       }
     }
-  }, []);
+  }, [auth]);
+
+  useEffect(() => {
+    if (auth) {
+      try {
+        (async function getData() {
+          const res = await axios.get(
+            "http://localhost:3000/notes",
+            {
+              headers: {
+                "auth-token": auth.token,
+              },
+            }
+          );
+          console.log("notes", res);
+          res.data && setNotes(res.data.notes);
+        })();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    if (auth) {
+      try {
+        (async function getData() {
+          const res = await axios.get(
+            "http://localhost:3000/playlist",
+            {
+              headers: {
+                "auth-token": auth.token,
+              },
+            }
+          );
+          console.log(res);
+          res.data && setPlaylist(res.data.playlist);
+        })();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [auth]);
 
   
   useEffect(() => {
@@ -90,23 +134,28 @@ function App() {
   useEffect(() => {
     if (auth) {
       try {
-        (async function getData() {
-          const res = await axios.get(
-            "http://localhost:3000/playlist",
+        (async function postNotes() {
+          const response = await axios.post(
+            "http://localhost:3000/notes",
+            {
+              notes: notes,
+            },
             {
               headers: {
                 "auth-token": auth.token,
               },
             }
           );
-          console.log(res);
-          res.data.playlist && setPlaylist(res.data.playlist);
+          console.log("notes", response.data.notes);
+          response.data.notes &&
+            localStorage.setItem("notes", JSON.stringify(response.data.notes));
         })();
       } catch (err) {
         console.log(err);
       }
     }
-  }, []);
+  }, [notes]);
+
 
   console.log(auth);
   

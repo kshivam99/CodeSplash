@@ -42,7 +42,7 @@ function Logout() {
           </h1>
         </div>
         <div style={{display:"flex", width:"80%"}}>
-        <button onClick={()=>history.goBack()} className="login--btn">
+        <button style={{backgroundColor:"#fff", color:"#000"}} onClick={()=>history.goBack()} className="login--btn">
           No
         </button>
         <button onClick={handleLogout} className="login--btn">

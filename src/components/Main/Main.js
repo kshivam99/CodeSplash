@@ -2,11 +2,18 @@ import React, { useEffect } from "react";
 import "./Main.css";
 import { Link } from "react-router-dom";
 import { useBookmark, useLibrary } from "../../contexts/bookmarkContext";
+import { useAuth } from "../../contexts/authContext";
 
 function MainHeader() {
+  const { auth } = useAuth();
+
   return (
     <div className="main--header">
-      <h1>Welcome Back, Shivam</h1>
+      {auth ? (
+        <h1>Welcome Back, {auth.user.name}</h1>
+      ) : (
+        <h1>Sign in to explore</h1>
+      )}
     </div>
   );
 }
@@ -42,19 +49,22 @@ function Notes() {
 }
 
 function Main({ setShowNavBottom }) {
+  const { auth } = useAuth();
   useEffect(() => {
     setShowNavBottom(true);
-    return ()=>{
+    return () => {
       setShowNavBottom(false);
-    }
+    };
   }, []);
   return (
     <div className="main--body">
       <MainHeader />
       <div className="main--content">
-        <BookMark />
-        <BookMark />
+        {auth && <BookMark />}
         <Notes />
+      </div>
+      <div className="row">
+        
       </div>
     </div>
   );

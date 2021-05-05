@@ -59,6 +59,7 @@
   background-color: #ef4444;
   border: none;
   outline: none;
+  cursor:pointer;
 }
 
 .nav--body {
