@@ -92,7 +92,7 @@ function Courses({ setShowNavBottom }) {
       try {
         (async function postPlaylist() {
           const response = await axios.post(
-            "http://localhost:3000/bookmark",
+            "https://polar-atoll-59873.herokuapp.com/bookmark",
             {
               bookmark: bookmark,
             },

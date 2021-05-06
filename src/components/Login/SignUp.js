@@ -17,7 +17,7 @@ function SignUp() {
   async function handleSignUp() {
     console.log("inside sign up");
     try {
-      const res = await axios.post("http://localhost:3000/auth/register", {
+      const res = await axios.post("https://polar-atoll-59873.herokuapp.com/auth/register", {
         name: name,
         email: email,
         password: password,

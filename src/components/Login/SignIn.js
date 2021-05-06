@@ -20,7 +20,7 @@ function SignIn() {
   async function handleSignIn() {
     try {
       setIsLoading(true);
-      const res = await axios.post("http://localhost:3000/auth/login", {
+      const res = await axios.post("https://polar-atoll-59873.herokuapp.com/auth/login", {
         email: email,
         password: password,
       });

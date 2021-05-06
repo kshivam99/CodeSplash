@@ -38,7 +38,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get("http://localhost:3000/courses");
+        const res = await axios.get("https://polar-atoll-59873.herokuapp.com/courses");
         res.data && setLibrary(res.data);
       } catch (err) {
         console.log(err);
@@ -50,7 +50,7 @@ function App() {
     if (auth) {
       try {
         (async function getData() {
-          const res = await axios.get("http://localhost:3000/bookmark", {
+          const res = await axios.get("https://polar-atoll-59873.herokuapp.com/bookmark", {
             headers: {
               "auth-token": auth.token,
             },
@@ -67,7 +67,7 @@ function App() {
     if (auth) {
       try {
         (async function getData() {
-          const res = await axios.get("http://localhost:3000/history", {
+          const res = await axios.get("https://polar-atoll-59873.herokuapp.com/history", {
             headers: {
               "auth-token": auth.token,
             },
@@ -84,7 +84,7 @@ function App() {
     if (auth) {
       try {
         (async function getData() {
-          const res = await axios.get("http://localhost:3000/notes", {
+          const res = await axios.get("https://polar-atoll-59873.herokuapp.com/notes", {
             headers: {
               "auth-token": auth.token,
             },
@@ -101,7 +101,7 @@ function App() {
     if (auth) {
       try {
         (async function getData() {
-          const res = await axios.get("http://localhost:3000/playlist", {
+          const res = await axios.get("https://polar-atoll-59873.herokuapp.com/playlist", {
             headers: {
               "auth-token": auth.token,
             },
@@ -119,7 +119,7 @@ function App() {
       try {
         (async function postPlaylist() {
           const response = await axios.post(
-            "http://localhost:3000/playlist",
+            "https://polar-atoll-59873.herokuapp.com/playlist",
             {
               playlist: playlist,
             },
@@ -146,7 +146,7 @@ function App() {
       try {
         (async function postHistory() {
           const response = await axios.post(
-            "http://localhost:3000/history",
+            "https://polar-atoll-59873.herokuapp.com/history",
             {
               history: history,
             },
@@ -173,7 +173,7 @@ function App() {
       try {
         (async function postNotes() {
           const response = await axios.post(
-            "http://localhost:3000/notes",
+            "https://polar-atoll-59873.herokuapp.com/notes",
             {
               notes: notes,
             },
