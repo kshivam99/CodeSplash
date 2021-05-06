@@ -1,48 +1,51 @@
 .playlist--body {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    box-sizing: border-box;
-    row-gap: 1rem;
-    column-gap: 1rem;
-}
-
-.playlist--body input {
-    width: 50%;
-    height: 2rem;
-    text-align: center;
-    border-radius: 1rem;
-    outline: none;
-    margin-bottom: 2rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 5rem;
+  min-height: 50vh;
 }
 
 .playlists {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    width: 100vw;
-    align-items: center;
-    justify-items: center;
-    box-sizing: border-box;
-    padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  align-items: center;
+  justify-items: center;
+  box-sizing: border-box;
+  padding: 1rem;
 }
 .playlist--card {
-    width: 10rem;
-    height: 10rem;
-    background-color: #fff;
-    border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding:1rem;
+  width: 60%;
+  height: 15rem;
+  background-color: #363636;
+  color: #fff;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
+.course--details{
+  width: 80%;
+  height: 100%;
+}
+.course--img{
+  width: 40%;
+  height: 100%;
+  background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5W0TfD8Tk6ZfptTiiD1uBmWFi4cfjxGHdiw&usqp=CAU") !important;
 }
 
 @media screen and (max-width: 760px) {
-    .playlist--body{
-        margin-top: 0;
-    }
+  .playlist--body {
+    margin-top: 0;
+  }
+  .createplaylist--container {
+    margin-top: 1rem;
+  }
 }

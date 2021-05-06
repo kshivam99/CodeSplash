@@ -1,11 +1,10 @@
 import { useContext, createContext, useState } from "react";
-import { data } from "../data/videoLibrary";
 
 
 const LibraryContext = createContext();
 
 export function LibraryProvider({children}) {
-    const [library, setLibrary] = useState(JSON.parse(localStorage.getItem("library")) || data);
+    const [library, setLibrary] = useState([]);
 
     return(
         <LibraryContext.Provider value={{library, setLibrary}}>

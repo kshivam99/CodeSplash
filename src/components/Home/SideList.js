@@ -3,11 +3,16 @@ import { usePlaylist } from "../../contexts/playlistContext";
 import { RiPlayListAddLine } from "react-icons/ri";
 import { AiFillCloseCircle } from "react-icons/ai";
 import uuid from "react-uuid";
+import { HiOutlineViewGridAdd } from "react-icons/hi";
+import { useToast } from "../../contexts/toastContext";
+import { useAuth } from "../../contexts/authContext";
 
-function StackList({ vid, setCurrVideo, setShowList }) {
+
+function AddToPlaylist({ showPlaylistMenu, setShowPlaylistMenu, vid }) {
   const { playlist, setPlaylist } = usePlaylist();
-  const [showPlaylistMenu, setShowPlaylistMenu] = useState(false);
   const [pname, setPname] = useState();
+  const { toast } = useToast();
+
 
   function checkAlreadyPresent(videos, vid) {
     return !videos.filter((item) => item === vid).length > 0;
@@ -16,7 +21,7 @@ function StackList({ vid, setCurrVideo, setShowList }) {
   function addToPlaylist(e, vid) {
     setPlaylist((prev) =>
       prev.map((curr) =>
-        curr.id === e.target.value
+        curr._id === e.target.value
           ? {
               ...curr,
               videos: checkAlreadyPresent(curr.videos, vid)
@@ -28,45 +33,40 @@ function StackList({ vid, setCurrVideo, setShowList }) {
     );
   }
 
+  function checkAlreadyPresentPlaylist(pname){
+    return !playlist.filter((item) => item.name === pname).length > 0;
+  }
+
   function addPlaylist(e) {
-    if (e.key === "Enter") {
+    if ((e.key === "Enter" || e.type==='click') && pname && pname.trim()!=="" && checkAlreadyPresentPlaylist(pname)) {
       setPlaylist((prev) =>
         prev.concat({
-          id: uuid(),
-          name: pname,
-          type: pname,
-          videos: [],
-          notes: [],
+          _id: uuid(),
+          name: pname.trim(),
+          videos: []
         })
       );
       setPname("");
     }
+    else if(e.key === "Enter"){
+      toast("Playlist already exist",{
+        type:"warning"
+      })
+    }
   }
 
   return (
-    <div className="stacklist--container">
-      <div
-        className="stacklist"
-        onClick={() => {
-          setCurrVideo(vid);
-        }}
-      >
-        <h1>{vid.heading}</h1>
-      </div>
-      <RiPlayListAddLine
-        onClick={() => setShowPlaylistMenu((prev) => !prev)}
-        size={32}
-      />
-
+    <div className="modal-container" style={{display:showPlaylistMenu?"":"none"}}>
       <div
         className="addToPlaylist"
         style={{ display: showPlaylistMenu ? "" : "none" }}
       >
         <AiFillCloseCircle
           onClick={() => setShowPlaylistMenu((prev) => !prev)}
-          style={{ marginLeft: "auto", marginBottom: "2rem" }}
+          style={{ marginLeft: "auto" }}
           size={24}
         />
+        <div className="input--flex">
         <input
           value={pname}
           onChange={(e) => setPname(e.target.value)}
@@ -78,23 +78,48 @@ function StackList({ vid, setCurrVideo, setShowList }) {
             width: "80%",
           }}
         />
+        <span><HiOutlineViewGridAdd size={24} onClick={addPlaylist}/></span>
+        </div>
         <select
           style={{ width: "100%", marginTop: "1rem" }}
           onChange={(e) => addToPlaylist(e, vid)}
         >
           <option>Add to playlist</option>
           {playlist.map((item) => (
-            <option value={item.id}>{item.type}</option>
+            <option value={item._id}>{item.name}</option>
           ))}
         </select>
       </div>
     </div>
   );
 }
+function StackList({ vid, setCurrVideo, setShowList }) {
+  const [showPlaylistMenu, setShowPlaylistMenu] = useState(false);
+  const { auth } = useAuth();
+
+  return (
+    <div className="stacklist--container">
+      <div
+        className="stacklist"
+        onClick={() => {
+          setCurrVideo(vid);
+        }}
+      >
+        <h1>{vid.heading}</h1>
+      </div>
+      { auth && <RiPlayListAddLine
+        onClick={() => setShowPlaylistMenu((prev) => !prev)}
+        size={32}
+      />}
+      <AddToPlaylist showPlaylistMenu={showPlaylistMenu} setShowPlaylistMenu={setShowPlaylistMenu} vid={vid}/>
+    </div>
+  );
+}
 
 function SideList({ name, videos, showList, setShowList, setCurrVideo }) {
+
   useEffect(() => {
-    setCurrVideo(videos[0]);
+    setCurrVideo( videos && videos[0]);
   }, []);
 
   return (
@@ -107,7 +132,7 @@ function SideList({ name, videos, showList, setShowList, setCurrVideo }) {
           size={24}
         />
       </div>
-      {videos.map((vid) => (
+      {videos && videos.map((vid) => (
         <StackList
           vid={vid}
           setCurrVideo={setCurrVideo}

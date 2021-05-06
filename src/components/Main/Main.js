@@ -1,56 +1,104 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./Main.css";
-import Imgg from "./image.svg";
 import { Link } from "react-router-dom";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
-import { useLibrary } from "../../contexts/libraryContext";
+import { useBookmark, useLibrary } from "../../contexts/bookmarkContext";
+import { useAuth } from "../../contexts/authContext";
+import { useHistory } from "../../contexts/historyContext";
+import { AiTwotoneDelete } from "react-icons/ai";
 
-function Main() {
-  const { library, setLibrary } = useLibrary();
-  const [showDropDown, setShowDropDown] = useState(false);
+function MainHeader() {
+  const { auth } = useAuth();
 
+  return (
+    <div className="main--header">
+      {auth ? (
+        <h1>Welcome Back, {auth.user.name}</h1>
+      ) : (
+        <h1>Sign in to explore</h1>
+      )}
+    </div>
+  );
+}
+
+function BookMark() {
+  const { bookmark } = useBookmark();
+  return (
+    <div className="tile--body">
+      <div className="tile--header">
+        <h1>Your Bookmarks</h1>
+      </div>
+      <div className="tile--content">
+        {bookmark.map((item) => (
+          <div className="content--list">
+            <div className="list--image">
+              <img src={item.back} alt="" />
+            </div>
+            <div className="list--details">
+              <Link className="link" to={`/course/${item._id}`}>
+                <h1 className="list--title">{item.name}</h1>
+              </Link>
+              <h1 className="list--author">{item.author}</h1>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function WatchHistory() {
+  const { history, setHistory } = useHistory();
+
+  function deleteFromHistory(id) {
+    setHistory((prev) => prev.filter((item) => item.id !== id));
+  }
+  return (
+    <div className="tile--body">
+      <div className="tile--header">
+        <h1>Your Watch History</h1>
+      </div>
+      <div className="tile--content">
+        {history.map((item) => (
+          <div className="content--list">
+            <div className="list--details">
+              <Link className="link" to={`/course/${item.playlistId}`}>
+                <h1 className="list--title">{item.heading}</h1>
+              </Link>
+              <h1 style={{alignSelf:"flex-start"}} className="list--author">{item.playlistName}</h1>
+            </div>
+            <AiTwotoneDelete
+              size={24}
+              style={{ marginLeft: "auto", marginRight: "2rem" }}
+              onClick={() => deleteFromHistory(item.id)}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Notes() {
+  return <div className="div"></div>;
+}
+
+function Main({ setShowNavBottom }) {
+  const { auth } = useAuth();
   useEffect(() => {
-    localStorage.setItem("library", JSON.stringify(library))
-  }, [library])
-
-  console.log(library);
+    setShowNavBottom(true);
+    return () => {
+      setShowNavBottom(false);
+    };
+  }, []);
   return (
     <div className="main--body">
-      <div className="main--nav">
-        <div className="select--tag">
-          <button onClick={() => setShowDropDown((prev) => !prev)}>
-            <IoIosArrowDropdownCircle size={24} />{" "}
-            <span className="show">Select a category</span>
-          </button>
-          <div className={showDropDown ? "option--tag" : " hide"}>
-            <Link className="link" to="/:foundation/Home">
-              <p>Foundation</p>
-            </Link>
-            <Link className="link" to={"/:js/Home"}>
-              <p>JavaScript</p>
-            </Link>
-            <Link className="link" to={"/:react/Home"}>
-              <p>React</p>
-            </Link>
-            <Link className="link" to={"/:redux/Home"}>
-              <p>Redux</p>
-            </Link>
-            <Link className="link" to={"/:typescript/Home"}>
-              <p>TypeScript</p>
-            </Link>
-            <Link className="link" to={"/:nextjs/Home"}>
-              <p>Next Js</p>
-            </Link>
-            <Link className="link" to={"/:reactnative/Home"}>
-              <p>React Native</p>
-            </Link>
-          </div>
-        </div>
+      <MainHeader />
+      <div className="main--content">
+        {auth && <BookMark />}
+        {auth && <WatchHistory />}
+        <Notes />
       </div>
-      <div className="header--image">
-        <img src={Imgg} alt="" />
-        <h1>From No Stack to Full Stack</h1>
-      </div>
+      <div className="row"></div>
     </div>
   );
 }
