@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -14,12 +14,16 @@ import { useAuth } from "./contexts/authContext";
 import { useLibrary } from "./contexts/libraryContext";
 import { useToast } from "./contexts/toastContext";
 import axios from "axios";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { useBookmark } from './contexts/bookmarkContext';
-import { usePlaylist } from './contexts/playlistContext';
-import { useNote } from './contexts/notesContext';
-import { useHistory } from './contexts/historyContext';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { useBookmark } from "./contexts/bookmarkContext";
+import { usePlaylist } from "./contexts/playlistContext";
+import { useNote } from "./contexts/notesContext";
+import { useHistory } from "./contexts/historyContext";
 
 function App() {
   const { auth } = useAuth();
@@ -27,37 +31,30 @@ function App() {
   const { setBookmark } = useBookmark();
   const { playlist, setPlaylist } = usePlaylist();
   const { history, setHistory } = useHistory();
-  const [ showNavBottom, setShowNavBottom ] = useState(false);
+  const [showNavBottom, setShowNavBottom] = useState(false);
   const { ToastContainer } = useToast();
   const { notes, setNotes } = useNote();
 
-  console.log(history);
-
-  useEffect(()=>{
-    (async ()=>{
-      try{
-      const res = await axios.get("http://localhost:3000/courses");
-      res.data && setLibrary(res.data);
-      }
-      catch(err)
-      {
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/courses");
+        res.data && setLibrary(res.data);
+      } catch (err) {
         console.log(err);
       }
-    })()
-  },[])
+    })();
+  }, []);
 
   useEffect(() => {
     if (auth) {
       try {
         (async function getData() {
-          const res = await axios.get(
-            "http://localhost:3000/bookmark",
-            {
-              headers: {
-                "auth-token": auth.token,
-              },
-            }
-          );
+          const res = await axios.get("http://localhost:3000/bookmark", {
+            headers: {
+              "auth-token": auth.token,
+            },
+          });
           res.data.bookmark && setBookmark(res.data.bookmark);
         })();
       } catch (err) {
@@ -70,14 +67,11 @@ function App() {
     if (auth) {
       try {
         (async function getData() {
-          const res = await axios.get(
-            "http://localhost:3000/history",
-            {
-              headers: {
-                "auth-token": auth.token,
-              },
-            }
-          );
+          const res = await axios.get("http://localhost:3000/history", {
+            headers: {
+              "auth-token": auth.token,
+            },
+          });
           res.data.history && setHistory(res.data.history);
         })();
       } catch (err) {
@@ -90,14 +84,11 @@ function App() {
     if (auth) {
       try {
         (async function getData() {
-          const res = await axios.get(
-            "http://localhost:3000/notes",
-            {
-              headers: {
-                "auth-token": auth.token,
-              },
-            }
-          );
+          const res = await axios.get("http://localhost:3000/notes", {
+            headers: {
+              "auth-token": auth.token,
+            },
+          });
           res.data && setNotes(res.data.notes);
         })();
       } catch (err) {
@@ -110,14 +101,11 @@ function App() {
     if (auth) {
       try {
         (async function getData() {
-          const res = await axios.get(
-            "http://localhost:3000/playlist",
-            {
-              headers: {
-                "auth-token": auth.token,
-              },
-            }
-          );
+          const res = await axios.get("http://localhost:3000/playlist", {
+            headers: {
+              "auth-token": auth.token,
+            },
+          });
           res.data && setPlaylist(res.data.playlist);
         })();
       } catch (err) {
@@ -126,7 +114,6 @@ function App() {
     }
   }, [auth]);
 
-  
   useEffect(() => {
     if (auth) {
       try {
@@ -143,7 +130,10 @@ function App() {
             }
           );
           response.data.playlist &&
-            localStorage.setItem("playlist", JSON.stringify(response.data.playlist));
+            localStorage.setItem(
+              "playlist",
+              JSON.stringify(response.data.playlist)
+            );
         })();
       } catch (err) {
         console.log(err);
@@ -167,7 +157,10 @@ function App() {
             }
           );
           response.data.history &&
-            localStorage.setItem("history", JSON.stringify(response.data.history));
+            localStorage.setItem(
+              "history",
+              JSON.stringify(response.data.history)
+            );
         })();
       } catch (err) {
         console.log(err);
@@ -199,37 +192,34 @@ function App() {
     }
   }, [notes]);
 
-  
   return (
     <div className="App">
       <Router>
-      <Navbar showNavBottom={showNavBottom} />
-      <Switch>
-        <Route exact path="/">
-          <Main setShowNavBottom={setShowNavBottom} />
-        </Route>
-        <Route path="/courses">
-          <Courses setShowNavBottom={setShowNavBottom}/>
-        </Route>
-        <Route path="/course/:id">
-          <Home />
-        </Route>
-        <Route exact path="/playlist">
-          {auth ? <Playlist />: <Redirect to="/login"/>}
-        </Route>
-        <Route exact path="/playlist/:id">
-          <Home />
-        </Route>
-        <Route path="/login">
-          {auth? <Redirect to="/" />:<Login />}
-        </Route>
-        <Route path="/join">
-          <Join />
-        </Route>
-        <Route path="/logout">
-          <Logout />
-        </Route>
-      </Switch>
+        <Navbar showNavBottom={showNavBottom} />
+        <Switch>
+          <Route exact path="/">
+            <Main setShowNavBottom={setShowNavBottom} />
+          </Route>
+          <Route path="/courses">
+            <Courses setShowNavBottom={setShowNavBottom} />
+          </Route>
+          <Route path="/course/:id">
+            <Home />
+          </Route>
+          <Route exact path="/playlist">
+            {auth ? <Playlist /> : <Redirect to="/login" />}
+          </Route>
+          <Route exact path="/playlist/:id">
+            <Home />
+          </Route>
+          <Route path="/login">{auth ? <Redirect to="/" /> : <Login />}</Route>
+          <Route path="/join">
+            <Join />
+          </Route>
+          <Route path="/logout">
+            <Logout />
+          </Route>
+        </Switch>
       </Router>
       <Footer />
       <ToastContainer

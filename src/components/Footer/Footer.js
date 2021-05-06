@@ -8,7 +8,7 @@ function Footer() {
       <div className="icons--row">
         <SocialIcon className="icon" url="https://www.linkedin.com/in/kshivam99/" />
         <SocialIcon className="icon" url="https://github.com/kshivam99" bgColor="#fff" />
-        <SocialIcon className="icon" url="https://twitter.com/kshivam99_" />
+        <SocialIcon className="icon" url="https://twitter.com/kshivam99_" fgColor="#fff"/>
       </div>
       <p>Design inspired from <a href="https://frontendmasters.com/">Frontend Masters</a></p>
     </div>

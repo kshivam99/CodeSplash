@@ -8,10 +8,9 @@ import Loader from "react-loader-spinner";
 import "./Login.css";
 import { Link } from "react-router-dom";
 
-
 function SignIn() {
-    const { toast } = useToast();
-    const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
   const { auth, setAuth } = useAuth();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
@@ -20,22 +19,18 @@ function SignIn() {
 
   async function handleSignIn() {
     try {
-        setIsLoading(true);
-      const res = await axios.post(
-        "http://localhost:3000/auth/login",
-        {
-          email: email,
-          password: password,
-        }
-      );
-      console.log(res);
+      setIsLoading(true);
+      const res = await axios.post("http://localhost:3000/auth/login", {
+        email: email,
+        password: password,
+      });
       setIsLoading(false);
       if (!res.data.token) {
         setError(res.data);
       } else {
-          toast("Logged in Successfully",{
-            type:"success"
-          });
+        toast("Logged in Successfully", {
+          type: "success",
+        });
         setAuth(res.data);
         setAuth((prev) => {
           localStorage.setItem("auth", JSON.stringify(prev));
@@ -43,7 +38,7 @@ function SignIn() {
         });
       }
     } catch (err) {
-        setIsLoading(false);
+      setIsLoading(false);
       console.log(err);
     }
   }
@@ -73,9 +68,12 @@ function SignIn() {
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <button onClick={handleSignIn} className="login--btn">
-          {isLoading?<Loader type="TailSpin" color="#fff" height={20} width={20} />:"Sign In"}
+          {isLoading ? (
+            <Loader type="TailSpin" color="#fff" height={20} width={20} />
+          ) : (
+            "Sign In"
+          )}
         </button>
-        
       </div>
     </div>
   );

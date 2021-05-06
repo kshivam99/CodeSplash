@@ -15,25 +15,20 @@ function SignUp() {
   const history = useHistory();
 
   async function handleSignUp() {
-    console.log("inside sign up")
+    console.log("inside sign up");
     try {
-      const res = await axios.post(
-        "http://localhost:3000/auth/register",
-        {
-          name: name,
-          email: email,
-          password: password,
-        }
-      );
-      console.log(res);
+      const res = await axios.post("http://localhost:3000/auth/register", {
+        name: name,
+        email: email,
+        password: password,
+      });
       if (!res.data.user) {
         setError(res.data);
-      }
-      else{
-        toast("Signed Up Successfully, Login to Continue",{
-          type:"success"
+      } else {
+        toast("Signed Up Successfully, Login to Continue", {
+          type: "success",
         });
-        <Redirect to="/login" />
+        <Redirect to="/login" />;
       }
     } catch (err) {
       console.log(err);
@@ -71,7 +66,6 @@ function SignUp() {
         <button className="login--btn" onClick={handleSignUp}>
           Sign Up
         </button>
-        
       </div>
     </div>
   );
