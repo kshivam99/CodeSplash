@@ -11,13 +11,9 @@ import { usePlaylist } from "../../contexts/playlistContext";
 
 function Logout() {
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
   const { setAuth } = useAuth();
   const { setBookmark } = useBookmark();
   const { setPlaylist } = usePlaylist();
-  const [error, setError] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const history = useHistory();
 
   function handleLogout() {

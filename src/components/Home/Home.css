@@ -234,4 +234,15 @@ z-index: 5;
     display: flex;
     flex-direction: column;
   }
+  .videoPlayer--notes{
+    display:none;
+  }
+  .videoPlayer{
+    margin:0;
+    width: 100vw;
+    margin-top: 6rem;
+  }
+  .sidebar--icon{
+    margin:0;
+    }
 }

@@ -1,5 +1,4 @@
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap");
 .nav {
   display: flex;
   justify-content: space-between;
@@ -7,10 +6,11 @@
   height: 4rem;
   color: #e6e6e6;
   background: linear-gradient(90deg, #390d0c, #421a0b);
-  overflow-y: hidden;
   width: 100%;
   position: fixed;
-  top:0;
+  top: 0;
+  box-sizing: border-box;
+  z-index: 10;
 }
 
 .bottom--bar {
@@ -43,11 +43,11 @@
 .menu li {
   margin: 0 1rem;
   cursor: pointer;
-  color: #9CA3AF;
+  color: #9ca3af;
 }
 
 .menu li:hover {
-    color: #fff;
+  color: #fff;
 }
 
 .link button {
@@ -59,7 +59,7 @@
   background-color: #ef4444;
   border: none;
   outline: none;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .nav--body {
@@ -77,18 +77,14 @@
   width: 100%;
   background-color: red;
   position: fixed;
-  top:4rem;
+  top: 4rem;
 }
 
-.menu-icon{
-    display: none;
+.menu-icon {
+  display: none;
 }
 
 @media screen and (max-width: 760px) {
-  .nav {
-    position: static;
-  }
-
   .nav .menu {
     display: flex;
     flex-direction: column;
@@ -98,6 +94,7 @@
     top: 4rem;
     left: -100%;
     opacity: 1;
+    justify-content: space-around;
     transition: all 0.6s ease;
     z-index: 10;
   }
@@ -126,7 +123,6 @@
   .bottom--bar {
     display: none;
   }
-  
 }
 
 .link:focus,
