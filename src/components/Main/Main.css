@@ -3,11 +3,9 @@
   display: flex;
   flex-direction: column;
   margin-top: 6rem;
-
 }
 .main--header {
-  margin-top: 6rem;
-  min-height: 50vh;
+  min-height: 30vh;
 }
 .main--header h1 {
   color: #fff;
@@ -28,7 +26,7 @@
 
 .tile--body {
   overflow-y: hidden;
-  width: 30rem;
+  width: 25rem;
   margin: 2rem 0;
 }
 
@@ -78,6 +76,14 @@
 
 @media screen and (max-width: 760px) {
   .main--body {
+    padding-top: 2rem;
     margin-top: 2rem;
+  }
+
+  .tile--body{
+    width: 15rem;
+  }
+  .list--title{
+    font-size: 1rem;
   }
 }
